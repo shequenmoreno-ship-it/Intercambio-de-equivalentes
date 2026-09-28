@@ -57,7 +57,7 @@
 <label>
     <input type="checkbox"> Azúcares — Sin grasa
 </label><br>
-
+<div id="grupoVerduras">
   <h2 id="verduras">Verduras</h2>
 <table>
     <tr>
@@ -154,6 +154,7 @@
         <td>1 taza</td>
     </tr>
 </table>
+    </div>
     
     <div id="grupoFrutas">
     <h2 id="frutas">Frutas</h2>
@@ -1023,6 +1024,24 @@
         <td>1/3 taza</td>
     </tr>
 </table>
+<script>
 
+function actualizarGrupos() {
+
+    document.getElementById("grupoVerduras").style.display =
+        document.getElementById("checkVerduras").checked ? "block" : "none";
+
+    document.getElementById("grupoFrutas").style.display =
+        document.getElementById("checkFrutas").checked ? "block" : "none";
+
+}
+
+document.getElementById("checkVerduras").addEventListener("change", actualizarGrupos);
+
+document.getElementById("checkFrutas").addEventListener("change", actualizarGrupos);
+
+actualizarGrupos();
+
+</script>
 </body>
 </html>
