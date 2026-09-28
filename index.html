@@ -20,7 +20,7 @@
 </label><br>
 
 <label>
-    <input type="checkbox"> Cereales sin grasa
+    <input type="checkbox" id="checkFrutas"> Frutas
 </label><br>
 
 <label>
@@ -161,7 +161,8 @@
     </tr>
 </table>
     </div>
-    <h2>Frutas</h2>
+    <div id="grupoFrutas">
+    <h2 id="frutas">Frutas</h2>
 
 <table>
     <tr>
@@ -281,6 +282,7 @@
     <td>1 ½ taza</td>
 </tr>
     <table>
+        </div>
         <h2>Cereales sin grasa</h2>
 
 <table>
@@ -1030,6 +1032,9 @@
     <script>
 document.getElementById("checkVerduras").addEventListener("change", function() {
     document.getElementById("grupoVerduras").style.display = this.checked ? "block" : "none";
+});
+        document.getElementById("checkFrutas").addEventListener("change", function() {
+    document.getElementById("grupoFrutas").style.display = this.checked ? "block" : "none";
 });
 </script>
 
