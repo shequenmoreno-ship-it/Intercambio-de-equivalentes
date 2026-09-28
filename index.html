@@ -1059,6 +1059,8 @@ function actualizarGrupos() {
 
     document.getElementById("grupoCerealesSinGrasa").style.display =
         document.getElementById("checkCerealesSinGrasa").checked ? "block" : "none";
+    document.getElementById("grupoLeguminosas").style.display =
+    document.getElementById("checkLeguminosas").checked ? "block" : "none";
 
 }
 
@@ -1067,6 +1069,7 @@ document.getElementById("checkVerduras").addEventListener("change", actualizarGr
 document.getElementById("checkFrutas").addEventListener("change", actualizarGrupos);
 
 document.getElementById("checkCerealesSinGrasa").addEventListener("change", actualizarGrupos);
+    document.getElementById("checkLeguminosas").addEventListener("change", actualizarGrupos);
 
 actualizarGrupos();
 
