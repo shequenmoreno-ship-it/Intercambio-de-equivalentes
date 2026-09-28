@@ -3,76 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Intercambio de Equivalentes</title>
 
     <style>
-
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #fafafa;
+            margin: 0;
+            padding: 20px;
+            background: #f7f7f7;
             color: #333;
         }
 
         h1 {
             text-align: center;
+            color: #5b3a70;
         }
 
         h2 {
-            margin-top: 30px;
+            color: #5b3a70;
+            margin-top: 0;
         }
 
-        .buscador {
-            margin-bottom: 20px;
-        }
-
-        #buscadorAlimentos {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+        .seleccion {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         .checkboxes {
-            margin-bottom: 30px;
-            padding: 15px;
-            background-color: white;
-            border-radius: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
         }
 
         .checkboxes label {
-            display: block;
-            margin: 8px 0;
+            background: #f1eaf5;
+            padding: 10px;
+            border-radius: 8px;
             cursor: pointer;
+        }
+
+        .checkboxes label:hover {
+            background: #e5d8ec;
         }
 
         .grupo {
             display: none;
-            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background-color: white;
-            margin-top: 10px;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px 12px;
-            text-align: left;
+            min-width: 400px;
         }
 
         th {
-            font-weight: bold;
-            background-color: #f2f2f2;
+            background: #5b3a70;
+            color: white;
+            padding: 10px;
+            text-align: left;
         }
 
+        td {
+            padding: 9px 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .nota {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 
@@ -80,89 +93,82 @@
 
     <h1>Intercambio de Equivalentes</h1>
 
+    <p class="nota">
+        Selecciona los grupos de alimentos que deseas consultar.
+    </p>
 
-    <!-- BUSCADOR -->
+    <div class="seleccion">
 
-    <div class="buscador">
+        <h2>Grupos de alimentos</h2>
 
-        <input
-            type="text"
-            id="buscadorAlimentos"
-            placeholder="🔎 Buscar alimento..."
-        >
+        <div class="checkboxes">
 
-    </div>
+            <label>
+                <input type="checkbox" id="checkVerduras">
+                Verduras
+            </label>
 
+            <label>
+                <input type="checkbox" id="checkFrutas">
+                Frutas
+            </label>
 
-    <!-- CASILLAS -->
+            <label>
+                <input type="checkbox" id="checkCerealesSinGrasa">
+                Cereales sin grasa
+            </label>
 
-    <div class="checkboxes">
+            <label>
+                <input type="checkbox" id="checkCerealesConGrasa">
+                Cereales con grasa
+            </label>
 
-        <label>
-            <input type="checkbox" id="checkVerduras">
-            Verduras
-        </label>
+            <label>
+                <input type="checkbox" id="checkLeguminosas">
+                Leguminosas
+            </label>
 
-        <label>
-            <input type="checkbox" id="checkFrutas">
-            Frutas
-        </label>
+            <label>
+                <input type="checkbox" id="checkAOAMuyBajo">
+                AOA - Muy bajo aporte de grasa
+            </label>
 
-        <label>
-            <input type="checkbox" id="checkCerealesSinGrasa">
-            Cereales sin grasa
-        </label>
+            <label>
+                <input type="checkbox" id="checkAOABajo">
+                AOA - Bajo aporte de grasa
+            </label>
 
-        <label>
-            <input type="checkbox" id="checkCerealesConGrasa">
-            Cereales con grasa
-        </label>
+            <label>
+                <input type="checkbox" id="checkAOAModerado">
+                AOA - Moderado aporte de grasa
+            </label>
 
-        <label>
-            <input type="checkbox" id="checkLeguminosas">
-            Leguminosas
-        </label>
+            <label>
+                <input type="checkbox" id="checkAOAAlto">
+                AOA - Alto aporte de grasa
+            </label>
 
-        <label>
-            <input type="checkbox" id="checkAOAMuyBajo">
-            AOA — Muy bajo aporte de grasa
-        </label>
+            <label>
+                <input type="checkbox" id="checkLecheSemidescremada">
+                Leche semidescremada
+            </label>
 
-        <label>
-            <input type="checkbox" id="checkAOABajo">
-            AOA — Bajo aporte de grasa
-        </label>
+            <label>
+                <input type="checkbox" id="checkAceitesSinProteina">
+                Aceites y grasas - Sin proteína
+            </label>
 
-        <label>
-            <input type="checkbox" id="checkAOAModerado">
-            AOA — Moderado aporte de grasa
-        </label>
+            <label>
+                <input type="checkbox" id="checkAceitesConProteina">
+                Aceites y grasas - Con proteína
+            </label>
 
-        <label>
-            <input type="checkbox" id="checkAOAAlto">
-            AOA — Alto aporte de grasa
-        </label>
+            <label>
+                <input type="checkbox" id="checkAzucaresSinGrasa">
+                Azúcares - Sin grasa
+            </label>
 
-        <label>
-            <input type="checkbox" id="checkLecheSemidescremada">
-            Leche semidescremada
-        </label>
-
-        <label>
-            <input type="checkbox" id="checkAceitesSinProteina">
-            Aceites y grasas — Sin proteína
-        </label>
-
-        <label>
-            <input type="checkbox" id="checkAceitesConProteina">
-            Aceites y grasas — Con proteína
-        </label>
-
-        <label>
-            <input type="checkbox" id="checkAzucaresSinGrasa">
-            Azúcares — Sin grasa
-        </label>
-
+        </div>
     </div>
 
 
@@ -173,10 +179,9 @@
         <h2>Verduras</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Acelga</td><td>1/2 taza</td></tr>
@@ -201,7 +206,6 @@
             <tr><td>Rábano</td><td>1 taza</td></tr>
 
         </table>
-
     </div>
 
 
@@ -212,10 +216,9 @@
         <h2>Frutas</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Blueberries</td><td>3/4 taza</td></tr>
@@ -248,7 +251,6 @@
             <tr><td>Agua de coco</td><td>1 1/2 taza</td></tr>
 
         </table>
-
     </div>
 
 
@@ -259,10 +261,9 @@
         <h2>Cereales sin grasa</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Arroz integral</td><td>1/3 taza</td></tr>
@@ -290,7 +291,6 @@
             <tr><td>Croutones</td><td>1/2 taza</td></tr>
 
         </table>
-
     </div>
 
 
@@ -301,10 +301,9 @@
         <h2>Cereales con grasa</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Barrita de granola</td><td>2 cdas</td></tr>
@@ -321,7 +320,6 @@
             <tr><td>Bisquet</td><td>1/2 pieza</td></tr>
 
         </table>
-
     </div>
 
 
@@ -332,10 +330,9 @@
         <h2>Leguminosas</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Alubia cocida</td><td>1/2 taza</td></tr>
@@ -345,7 +342,6 @@
             <tr><td>Hummus</td><td>5 cucharadas</td></tr>
 
         </table>
-
     </div>
 
 
@@ -353,13 +349,12 @@
 
     <div class="grupo" id="grupoAOAMuyBajo">
 
-        <h2>AOA — Muy bajo aporte de grasa</h2>
+        <h2>AOA - Muy bajo aporte de grasa</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Pechuga de pollo sin piel</td><td>30 g</td></tr>
@@ -387,7 +382,6 @@
             <tr><td>Queso mozzarella</td><td>1 rebanada</td></tr>
 
         </table>
-
     </div>
 
 
@@ -395,13 +389,12 @@
 
     <div class="grupo" id="grupoAOABajo">
 
-        <h2>AOA — Bajo aporte de grasa</h2>
+        <h2>AOA - Bajo aporte de grasa</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Arrachera de res</td><td>30 g</td></tr>
@@ -437,7 +430,6 @@
             <tr><td>Sirloin</td><td>25 g</td></tr>
 
         </table>
-
     </div>
 
 
@@ -445,13 +437,12 @@
 
     <div class="grupo" id="grupoAOAModerado">
 
-        <h2>AOA — Moderado aporte de grasa</h2>
+        <h2>AOA - Moderado aporte de grasa</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Huevo</td><td>1 pieza</td></tr>
@@ -473,7 +464,6 @@
             <tr><td>Queso parmesano rallado</td><td>3 1/2 cdas</td></tr>
 
         </table>
-
     </div>
 
 
@@ -481,13 +471,12 @@
 
     <div class="grupo" id="grupoAOAAlto">
 
-        <h2>AOA — Alto aporte de grasa</h2>
+        <h2>AOA - Alto aporte de grasa</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Alitas de pollo</td><td>2 piezas</td></tr>
@@ -504,7 +493,6 @@
             <tr><td>Salchicha</td><td>1/2 pieza</td></tr>
 
         </table>
-
     </div>
 
 
@@ -515,17 +503,15 @@
         <h2>Leche semidescremada</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Leche semidescremada</td><td>1 taza</td></tr>
-            <tr><td>Yogurth Oikos griego natural</td><td>Envase de 150 gramos</td></tr>
+            <tr><td>Yogurth Oikos estilo griego natural sin azúcar</td><td>Envase de 150 gramos</td></tr>
 
         </table>
-
     </div>
 
 
@@ -533,13 +519,12 @@
 
     <div class="grupo" id="grupoAceitesSinProteina">
 
-        <h2>Aceites y grasas — Sin proteína</h2>
+        <h2>Aceites y grasas - Sin proteína</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Aguacate Hass</td><td>1/3 pieza</td></tr>
@@ -564,7 +549,6 @@
             <tr><td>Aderezo César</td><td>1/2 cucharadita</td></tr>
 
         </table>
-
     </div>
 
 
@@ -572,13 +556,12 @@
 
     <div class="grupo" id="grupoAceitesConProteina">
 
-        <h2>Aceites y grasas — Con proteína</h2>
+        <h2>Aceites y grasas - Con proteína</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Ajonjolí</td><td>4 cucharaditas</td></tr>
@@ -597,7 +580,6 @@
             <tr><td>Vinagreta</td><td>1 1/2 cucharadita</td></tr>
 
         </table>
-
     </div>
 
 
@@ -605,32 +587,13 @@
 
     <div class="grupo" id="grupoAzucaresSinGrasa">
 
-        <h2>Azúcares — Sin grasa</h2>
+        <h2>Azúcares - Sin grasa</h2>
 
         <table>
-
             <tr>
                 <th>Alimento</th>
-                <th>Equivalente</th>
+                <th>Porción</th>
             </tr>
 
             <tr><td>Azúcar de mesa</td><td>2 cucharaditas</td></tr>
-            <tr><td>Miel</td><td>2 cucharaditas</td></tr>
-            <tr><td>Panditas</td><td>1/3 bolsa</td></tr>
-            <tr><td>Paleta helada de agua</td><td>1 pieza</td></tr>
-            <tr><td>Salsa catsup</td><td>2 cucharadas</td></tr>
-            <tr><td>Mermelada</td><td>2 1/2 cucharaditas</td></tr>
-            <tr><td>Malvavisco</td><td>2 piezas</td></tr>
-            <tr><td>Gomitas</td><td>4 piezas</td></tr>
-            <tr><td>Gelatina</td><td>1/3 taza</td></tr>
-
-        </table>
-
-    </div>
-
-
-    <!-- JAVASCRIPT -->
-
-    <script>
-
-        const relaciones = {
+            <tr><td>Miel</td><td>2 cucha
