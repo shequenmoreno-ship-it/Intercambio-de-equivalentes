@@ -1039,14 +1039,16 @@ function actualizarGrupos() {
     document.getElementById("grupoFrutas").style.display =
         document.getElementById("checkFrutas").checked ? "block" : "none";
 
+    document.getElementById("grupoCerealesSinGrasa").style.display =
+        document.getElementById("checkCerealesSinGrasa").checked ? "block" : "none";
+
 }
 
 document.getElementById("checkVerduras").addEventListener("change", actualizarGrupos);
 
 document.getElementById("checkFrutas").addEventListener("change", actualizarGrupos);
-    document.getElementById("checkCerealesSinGrasa").addEventListener("change", actualizarGrupos);
-    document.getElementById("grupoCerealesSinGrasa").style.display =
-    document.getElementById("checkCerealesSinGrasa").checked ? "block" : "none";
+
+document.getElementById("checkCerealesSinGrasa").addEventListener("change", actualizarGrupos);
 
 actualizarGrupos();
 
