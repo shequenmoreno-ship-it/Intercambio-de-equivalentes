@@ -63,6 +63,7 @@
     <input type="checkbox"> Azúcares — Sin grasa
 </label><br>
 
+<div id="grupoVerduras">
   <h2 id="verduras">Verduras</h2>
 <table>
     <tr>
@@ -159,6 +160,7 @@
         <td>1 taza</td>
     </tr>
 </table>
+    </div>
     <h2>Frutas</h2>
 
 <table>
@@ -1025,11 +1027,13 @@
         <td>1/3 taza</td>
     </tr>
 </table>
-        
-       <script>
+    <script>
 document.getElementById("checkVerduras").addEventListener("change", function() {
-    document.getElementById("verduras").style.display = this.checked ? "block" : "none";
+    document.getElementById("grupoVerduras").style.display = this.checked ? "block" : "none";
 });
-</script> 
+</script>
+
+</body>
+</html>
     </body>
 </html>
