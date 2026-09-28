@@ -12,7 +12,7 @@
     <h3>Selecciona los grupos que deseas mostrar:</h3>
 
 <label>
-    <input type="checkbox"> Verduras
+    <input type="checkbox" id="checkVerduras"> Verduras
 </label><br>
 
 <label>
@@ -63,7 +63,7 @@
     <input type="checkbox"> Azúcares — Sin grasa
 </label><br>
 
-  <h2>Verduras</h2>
+  <h2 id="verduras">Verduras</h2>
 <table>
     <tr>
         <th>Alimento</th>
@@ -1026,6 +1026,10 @@
     </tr>
 </table>
         
-        
+       <script>
+document.getElementById("checkVerduras").addEventListener("change", function() {
+    document.getElementById("verduras").style.display = this.checked ? "block" : "none";
+});
+</script> 
     </body>
 </html>
