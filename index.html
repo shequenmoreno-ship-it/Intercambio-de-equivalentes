@@ -2,35 +2,39 @@
 <html>
 <head>
     <title>Intercambio de Equivalentes</title>
-    <style>
-table {
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
 
-th, td {
-    padding: 8px 15px;
-    text-align: left;
-}
-</style>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px 15px;
+            text-align: left;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Intercambio de Equivalentes</h1>
+<h1>Intercambio de Equivalentes</h1>
 
-    <p>Lista de alimentos por grupo.</p>
-    <h3>Selecciona los grupos que deseas mostrar:</h3>
+<p>Lista de alimentos por grupo.</p>
+
+<h3>Selecciona los grupos que deseas mostrar:</h3>
 
 <label>
     <input type="checkbox" id="checkVerduras"> Verduras
 </label><br>
+
 <label>
     <input type="checkbox" id="checkFrutas"> Frutas
 </label><br>
+
 <label>
     <input type="checkbox" id="checkCerealesSinGrasa"> Cereales sin grasa
-    </label><br>
+</label><br>
 
 <label>
     <input type="checkbox" id="checkCerealesConGrasa"> Cereales con grasa
@@ -45,357 +49,160 @@ th, td {
 </label><br>
 
 <label>
-    <input type="checkbox"> AOA — Bajo aporte de grasa
+    <input type="checkbox" id="checkAOABajo"> AOA — Bajo aporte de grasa
 </label><br>
 
 <label>
-    <input type="checkbox"> AOA — Moderado aporte de grasa
+    <input type="checkbox" id="checkAOAModerado"> AOA — Moderado aporte de grasa
 </label><br>
 
 <label>
-    <input type="checkbox"> AOA — Alto aporte de grasa
+    <input type="checkbox" id="checkAOAAlto"> AOA — Alto aporte de grasa
 </label><br>
 
 <label>
-    <input type="checkbox"> Leche semidescremada
+    <input type="checkbox" id="checkLeche"> Leche semidescremada
 </label><br>
 
 <label>
-    <input type="checkbox"> Aceites y grasas — Sin proteína
+    <input type="checkbox" id="checkAceitesSinProteina"> Aceites y grasas — Sin proteína
 </label><br>
 
 <label>
-    <input type="checkbox"> Aceites y grasas — Con proteína
+    <input type="checkbox" id="checkAceitesConProteina"> Aceites y grasas — Con proteína
 </label><br>
 
 <label>
-    <input type="checkbox"> Azúcares — Sin grasa
+    <input type="checkbox" id="checkAzucares"> Azúcares — Sin grasa
 </label><br>
+
+
+<!-- VERDURAS -->
+
 <div id="grupoVerduras">
-  <h2 id="verduras">Verduras</h2>
+
+<h2>Verduras</h2>
+
 <table>
     <tr>
         <th>Alimento</th>
         <th>Porción</th>
     </tr>
 
-    <tr>
-        <td>Acelga</td>
-        <td>1/2 taza</td>
-    </tr>
-
-    <tr>
-        <td>Brócoli</td>
-        <td>1/2 taza</td>
-    </tr>
-
-    <tr>
-        <td>Calabacita alargada</td>
-        <td>1 pieza</td>
-      
-    </tr>
-        <td>Calabacita alargada</td>
-        <td>1 pieza</td>
-  
-    </tr>
-
-   <tr>
-        <td>Champiñón</td>
-        <td>1/2 taza</td>
-    </tr>
-   <tr>
-        <td>Chayote</td>
-        <td>1 taza</td>
-    </tr>
-   <tr>
-        <td>Chícharo</td>
-        <td>1/4 taza</td>
-    </tr>
-   <tr>
-        <td>Espinaca cruda</td>
-        <td>2 tazas</td>
-    </tr>
-   <tr>
-        <td>Jitomate</td>
-        <td>1 pieza</td>
-    </tr>
-   <tr>
-        <td>Zanahoria cruda</td>
-        <td>1/2 taza</td>
-    </tr>
-   <tr>
-        <td>Cebolla</td>
-        <td>1/2 taza</td>
-    </tr>
-   <tr>
-        <td>Pimiento fresco</td>
-        <td>1 taza</td>
-    </tr>
-   <tr>
-        <td>Lechuga</td>
-        <td>2 tazas</td>
-    </tr>
-   <tr>
-        <td>Apio</td>
-        <td>1 taza</td>
-    </tr>
-   <tr>
-        <td>Betabel</td>
-        <td>1/4 pieza</td>
-    </tr>
-   <tr>
-        <td>Coliflor</td>
-        <td>1 taza</td>
-    </tr>
-   <tr>
-        <td>Ejotes</td>
-        <td>1/2 taza</td>
-    </tr>
-   <tr>
-        <td>Jícama</td>
-        <td>1/2 taza</td>
-    </tr>
-   <tr>
-        <td>Nopal</td>
-        <td>1 taza</td>
-    </tr>
-   <tr>
-        <td>Pepino</td>
-        <td>1 taza</td>
-    </tr>
-   <tr>
-        <td>Rábano</td>
-        <td>1 taza</td>
-    </tr>
+    <tr><td>Acelga</td><td>1/2 taza</td></tr>
+    <tr><td>Brócoli</td><td>1/2 taza</td></tr>
+    <tr><td>Calabacita alargada</td><td>1 pieza</td></tr>
+    <tr><td>Champiñón</td><td>1/2 taza</td></tr>
+    <tr><td>Chayote</td><td>1 taza</td></tr>
+    <tr><td>Chícharo</td><td>1/4 taza</td></tr>
+    <tr><td>Espinaca cruda</td><td>2 tazas</td></tr>
+    <tr><td>Jitomate</td><td>1 pieza</td></tr>
+    <tr><td>Zanahoria cruda</td><td>1/2 taza</td></tr>
+    <tr><td>Cebolla</td><td>1/2 taza</td></tr>
+    <tr><td>Pimiento fresco</td><td>1 taza</td></tr>
+    <tr><td>Lechuga</td><td>2 tazas</td></tr>
+    <tr><td>Apio</td><td>1 taza</td></tr>
+    <tr><td>Betabel</td><td>1/4 pieza</td></tr>
+    <tr><td>Coliflor</td><td>1 taza</td></tr>
+    <tr><td>Ejotes</td><td>1/2 taza</td></tr>
+    <tr><td>Jícama</td><td>1/2 taza</td></tr>
+    <tr><td>Nopal</td><td>1 taza</td></tr>
+    <tr><td>Pepino</td><td>1 taza</td></tr>
+    <tr><td>Rábano</td><td>1 taza</td></tr>
 </table>
-    </div>
-    
-    <div id="grupoFrutas">
-    <h2 id="frutas">Frutas</h2>
 
-<table>
-    <tr>
-        <th>Alimento</th>
-        <th>Porción</th>
-    </tr>
-    <tr>
-    <td>Blueberries</td>
-    <td>¾ taza</td>
-</tr>
-<tr>
-    <td>Frambuesa</td>
-    <td>1 taza</td>
-</tr>
-<tr>
-    <td>Zarzamora</td>
-    <td>1 taza</td>
-</tr>
-<tr>
-    <td>Fresa entera</td>
-    <td>17 piezas medianas</td>
-</tr>
-<tr>
-    <td>Uva</td>
-    <td>18 piezas</td>
-</tr>
-<tr>
-    <td>Plátano</td>
-    <td>½ pieza</td>
-</tr>
-<tr>
-    <td>Fresa congelada</td>
-    <td>½ taza</td>
-</tr>
-<tr>
-    <td>Mango manila</td>
-    <td>1 pieza</td>
-</tr>
-<tr>
-    <td>Mango petacón</td>
-    <td>½ pieza</td>
-</tr>
-<tr>
-    <td>Manzana</td>
-    <td>1 pieza</td>
-</tr>
-<tr>
-    <td>Melón</td>
-    <td>1 taza</td>
-</tr>
-<tr>
-    <td>Pera</td>
-    <td>½ pieza</td>
-</tr>
-<tr>
-    <td>Sandía</td>
-    <td>1 taza</td>
-</tr>
-<tr>
-    <td>Duraznos</td>
-    <td>2 piezas</td>
-</tr>
-<tr>
-    <td>Mandarina</td>
-    <td>1 taza</td>
-</tr>
-<tr>
-    <td>Piña</td>
-    <td>¾ taza</td>
-</tr>
-<tr>
-    <td>Zapote</td>
-    <td>¼ taza</td>
-</tr>
-<tr>
-    <td>Papaya</td>
-    <td>1 taza</td>
-</tr>
-<tr>
-    <td>Guanábana</td>
-    <td>1 pieza chica</td>
-</tr>
-<tr>
-    <td>Naranja</td>
-    <td>4 piezas</td>
-</tr>
-<tr>
-    <td>Tuna</td>
-    <td>2 piezas</td>
-</tr>
-<tr>
-    <td>Toronja</td>
-    <td>1 pieza</td>
-</tr>
-<tr>
-    <td>Maracuyá</td>
-    <td>3 piezas</td>
-</tr>
-<tr>
-    <td>Lima</td>
-    <td>3 piezas</td>
-</tr>
-<tr>
-    <td>Kiwi</td>
-    <td>1 ½ pieza</td>
-</tr>
-<tr>
-    <td>Guayaba</td>
-    <td>3 piezas</td>
-</tr>
-<tr>
-    <td>Cereza</td>
-    <td>20 piezas</td>
-</tr>
-<tr>
-    <td>Agua de coco</td>
-    <td>1 ½ taza</td>
-</tr>
-   </table>
-   </div>
-        <div id="grupoCerealesSinGrasa">
-        <h2>Cereales sin grasa</h2>
-<table>
-    
-    <tr>
-        <th>Alimento</th>
-        <th>Porción</th>
-    </tr>
-   <tr>
-    <td>Arroz integral</td>
-    <td>1/3 taza</td>
-</tr>
-<tr>
-    <td>Arroz cocido</td>
-    <td>¼ taza</td>
-</tr>
-<tr>
-    <td>Avena integral</td>
-    <td>1/3 taza</td>
-</tr>
-<tr>
-    <td>Bolillo</td>
-    <td>1/3 pieza</td>
-</tr>
-<tr>
-    <td>Avena Quaker 3 min</td>
-    <td>½ taza</td>
-</tr>
-<tr>
-    <td>Camote cocido</td>
-    <td>1/3 taza</td>
-</tr>
-<tr>
-    <td>Elote desgranado</td>
-    <td>½ taza</td>
-</tr>
-<tr>
-    <td>Pinole</td>
-    <td>15 gramos</td>
-</tr>
-<tr>
-    <td>Palomitas naturales</td>
-    <td>2 ½ taza</td>
-</tr>
-<tr>
-    <td>Macarrón cocido</td>
-    <td>1/3 taza</td>
-</tr>
-<tr>
-    <td>Galleta María</td>
-    <td>5 piezas</td>
-</tr>
-<tr>
-    <td>Galletas Salmas</td>
-    <td>3 piezas</td>
-</tr>
-<tr>
-    <td>Pan blanco o tostado</td>
-    <td>1 rebanada</td>
-</tr>
-<tr>
-    <td>Papa</td>
-    <td>½ pieza</td>
-</tr>
-<tr>
-    <td>Pasta cocida</td>
-    <td>½ taza</td>
-</tr>
-<tr>
-    <td>Saladitas</td>
-    <td>5 piezas</td>
-</tr>
-<tr>
-    <td>Tortilla</td>
-    <td>1 pieza</td>
-</tr>
-<tr>
-    <td>Yuca</td>
-    <td>¼ pieza</td>
-</tr>
-<tr>
-    <td>Pan pita</td>
-    <td>1/3 pieza</td>
-</tr>
-<tr>
-    <td>Pan de caja</td>
-    <td>1 rebanada</td>
-</tr>
-<tr>
-    <td>Maicena</td>
-    <td>2 cucharadas</td>
-</tr>
-<tr>
-    <td>Hojuelas de maíz</td>
-    <td>¾ taza</td>
-</tr>
-<tr>
-    <td>Croutones</td>
-    <td>½ taza</td>
-</tr>
-</table>
 </div>
 
+
+<!-- FRUTAS -->
+
+<div id="grupoFrutas">
+
+<h2>Frutas</h2>
+
+<table>
+    <tr>
+        <th>Alimento</th>
+        <th>Porción</th>
+    </tr>
+
+    <tr><td>Blueberries</td><td>¾ taza</td></tr>
+    <tr><td>Frambuesa</td><td>1 taza</td></tr>
+    <tr><td>Zarzamora</td><td>1 taza</td></tr>
+    <tr><td>Fresa entera</td><td>17 piezas medianas</td></tr>
+    <tr><td>Uva</td><td>18 piezas</td></tr>
+    <tr><td>Plátano</td><td>½ pieza</td></tr>
+    <tr><td>Fresa congelada</td><td>½ taza</td></tr>
+    <tr><td>Mango manila</td><td>1 pieza</td></tr>
+    <tr><td>Mango petacón</td><td>½ pieza</td></tr>
+    <tr><td>Manzana</td><td>1 pieza</td></tr>
+    <tr><td>Melón</td><td>1 taza</td></tr>
+    <tr><td>Pera</td><td>½ pieza</td></tr>
+    <tr><td>Sandía</td><td>1 taza</td></tr>
+    <tr><td>Duraznos</td><td>2 piezas</td></tr>
+    <tr><td>Mandarina</td><td>1 taza</td></tr>
+    <tr><td>Piña</td><td>¾ taza</td></tr>
+    <tr><td>Zapote</td><td>¼ taza</td></tr>
+    <tr><td>Papaya</td><td>1 taza</td></tr>
+    <tr><td>Guanábana</td><td>1 pieza chica</td></tr>
+    <tr><td>Naranja</td><td>4 piezas</td></tr>
+    <tr><td>Tuna</td><td>2 piezas</td></tr>
+    <tr><td>Toronja</td><td>1 pieza</td></tr>
+    <tr><td>Maracuyá</td><td>3 piezas</td></tr>
+    <tr><td>Lima</td><td>3 piezas</td></tr>
+    <tr><td>Kiwi</td><td>1 ½ pieza</td></tr>
+    <tr><td>Guayaba</td><td>3 piezas</td></tr>
+    <tr><td>Cereza</td><td>20 piezas</td></tr>
+    <tr><td>Agua de coco</td><td>1 ½ taza</td></tr>
+</table>
+
+</div>
+
+
+<!-- CEREALES SIN GRASA -->
+
+<div id="grupoCerealesSinGrasa">
+
+<h2>Cereales sin grasa</h2>
+
+<table>
+    <tr>
+        <th>Alimento</th>
+        <th>Porción</th>
+    </tr>
+
+    <tr><td>Arroz integral</td><td>1/3 taza</td></tr>
+    <tr><td>Arroz cocido</td><td>¼ taza</td></tr>
+    <tr><td>Avena integral</td><td>1/3 taza</td></tr>
+    <tr><td>Bolillo</td><td>1/3 pieza</td></tr>
+    <tr><td>Avena Quaker 3 min</td><td>½ taza</td></tr>
+    <tr><td>Camote cocido</td><td>1/3 taza</td></tr>
+    <tr><td>Elote desgranado</td><td>½ taza</td></tr>
+    <tr><td>Pinole</td><td>15 gramos</td></tr>
+    <tr><td>Palomitas naturales</td><td>2 ½ taza</td></tr>
+    <tr><td>Macarrón cocido</td><td>1/3 taza</td></tr>
+    <tr><td>Galleta María</td><td>5 piezas</td></tr>
+    <tr><td>Galletas Salmas</td><td>3 piezas</td></tr>
+    <tr><td>Pan blanco o tostado</td><td>1 rebanada</td></tr>
+    <tr><td>Papa</td><td>½ pieza</td></tr>
+    <tr><td>Pasta cocida</td><td>½ taza</td></tr>
+    <tr><td>Saladitas</td><td>5 piezas</td></tr>
+    <tr><td>Tortilla</td><td>1 pieza</td></tr>
+    <tr><td>Yuca</td><td>¼ pieza</td></tr>
+    <tr><td>Pan pita</td><td>1/3 pieza</td></tr>
+    <tr><td>Pan de caja</td><td>1 rebanada</td></tr>
+    <tr><td>Maicena</td><td>2 cucharadas</td></tr>
+    <tr><td>Hojuelas de maíz</td><td>¾ taza</td></tr>
+    <tr><td>Croutones</td><td>½ taza</td></tr>
+</table>
+
+</div>
+
+
+<!-- CEREALES CON GRASA -->
+
 <div id="grupoCerealesConGrasa">
+
 <h2>Cereales con grasa</h2>
 
 <table>
@@ -403,59 +210,28 @@ th, td {
         <th>Alimento</th>
         <th>Porción</th>
     </tr>
-    <table>
-        <tr>
-    <td>Barrita de granola</td>
-    <td>2 cucharadas</td>
-</tr>
-<tr>
-    <td>Croissant</td>
-    <td>½ pieza</td>
-</tr>
-<tr>
-    <td>Croutones</td>
-    <td>¾ taza</td>
-</tr>
-<tr>
-    <td>Galleta de avena</td>
-    <td>2 piezas</td>
-</tr>
-<tr>
-    <td>Pan de ajo</td>
-    <td>1 pieza</td>
-</tr>
-<tr>
-    <td>Pay de queso</td>
-    <td>1 rebanada</td>
-</tr>
-<tr>
-    <td>Puré de papa</td>
-    <td>½ taza</td>
-</tr>
-<tr>
-    <td>Tostada</td>
-    <td>1 ½ pieza</td>
-</tr>
-<tr>
-    <td>Waffle</td>
-    <td>1 pieza</td>
-</tr>
-<tr>
-    <td>Wrap</td>
-    <td>½ pieza</td>
-</tr>
-<tr>
-    <td>Churros</td>
-    <td>½ pieza</td>
-</tr>
-<tr>
-    <td>Bisquet</td>
-    <td>½ pieza</td>
-</tr>
+
+    <tr><td>Barrita de granola</td><td>2 cucharadas</td></tr>
+    <tr><td>Croissant</td><td>½ pieza</td></tr>
+    <tr><td>Croutones</td><td>¾ taza</td></tr>
+    <tr><td>Galleta de avena</td><td>2 piezas</td></tr>
+    <tr><td>Pan de ajo</td><td>1 pieza</td></tr>
+    <tr><td>Pay de queso</td><td>1 rebanada</td></tr>
+    <tr><td>Puré de papa</td><td>½ taza</td></tr>
+    <tr><td>Tostada</td><td>1 ½ pieza</td></tr>
+    <tr><td>Waffle</td><td>1 pieza</td></tr>
+    <tr><td>Wrap</td><td>½ pieza</td></tr>
+    <tr><td>Churros</td><td>½ pieza</td></tr>
+    <tr><td>Bisquet</td><td>½ pieza</td></tr>
 </table>
+
 </div>
 
+
+<!-- LEGUMINOSAS -->
+
 <div id="grupoLeguminosas">
+
 <h2>Leguminosas</h2>
 
 <table>
@@ -463,131 +239,60 @@ th, td {
         <th>Alimento</th>
         <th>Porción</th>
     </tr>
-    <tr>
-    <td>Alubia cocida</td>
-    <td>½ taza</td>
-</tr>
-<tr>
-    <td>Frijol molido</td>
-    <td>1/3 taza</td>
-</tr>
-<tr>
-    <td>Garbanzo</td>
-    <td>½ taza</td>
-</tr>
-<tr>
-    <td>Lenteja cocida</td>
-    <td>½ taza</td>
-</tr>
-<tr>
-    <td>Hummus</td>
-    <td>5 cucharadas</td>
-</tr>
+
+    <tr><td>Alubia cocida</td><td>½ taza</td></tr>
+    <tr><td>Frijol molido</td><td>1/3 taza</td></tr>
+    <tr><td>Garbanzo</td><td>½ taza</td></tr>
+    <tr><td>Lenteja cocida</td><td>½ taza</td></tr>
+    <tr><td>Hummus</td><td>5 cucharadas</td></tr>
 </table>
+
 </div>
 
+
+<!-- AOA MUY BAJO -->
+
 <div id="grupoAOAMuyBajo">
-<h2>AOA muy bajo aporte de grasa</h2>
+
+<h2>AOA — Muy bajo aporte de grasa</h2>
 
 <table>
     <tr>
         <th>Alimento</th>
         <th>Porción</th>
     </tr>
-    <tr>
-    <td>Pechuga de pollo sin piel</td>
-    <td>30 gramos</td>
-</tr>
-<tr>
-    <td>Filete de pescado</td>
-    <td>40 gramos</td>
-</tr>
-<tr>
-    <td>Atún en agua</td>
-    <td>1/3 lata</td>
-</tr>
-<tr>
-    <td>Camarón cocido</td>
-    <td>5 piezas</td>
-</tr>
-<tr>
-    <td>Bistec</td>
-    <td>30 gramos</td>
-</tr>
-<tr>
-    <td>Filete de res</td>
-    <td>30 gramos</td>
-</tr>
-<tr>
-    <td>Cecina</td>
-    <td>25 gramos</td>
-</tr>
-<tr>
-    <td>Clara de huevo</td>
-    <td>2 piezas</td>
-</tr>
-<tr>
-    <td>Atún fresco</td>
-    <td>30 gramos</td>
-</tr>
-<tr>
-    <td>Camarón gigante</td>
-    <td>2 piezas</td>
-</tr>
-<tr>
-    <td>Chambarete de res</td>
-    <td>35 gramos</td>
-</tr>
-<tr>
-    <td>Chuleta ahumada</td>
-    <td>½ Pieza</td>
-</tr>
-<tr>
-    <td>Cuete de res</td>
-    <td>45 gramos</td>
-</tr>
-<tr>
-    <td>Filete de atún</td>
-    <td>30 gramos</td>
-</tr>
-<tr>
-    <td>Milanesa de pollo</td>
-    <td>30 gramos</td>
-</tr>
-<tr>
-    <td>Pescado fileteado</td>
-    <td>40 gramos</td>
-</tr>
-<tr>
-    <td>Aguayón</td>
-    <td>30 gramos</td>
-</tr>
-<tr>
-    <td>Carne molida de pollo</td>
-    <td>30 gramos</td>
-</tr>
-<tr>
-    <td>Clara de huevo en polvo</td>
-    <td>1 ½ cucharada</td>
-</tr>
-<tr>
-    <td>Falda de res</td>
-    <td>35 gramos</td>
-</tr>
-<tr>
-    <td>Maciza de res</td>
-    <td>25 gramos</td>
-</tr>
-<tr>
-    <td>Queso cottage</td>
-    <td>50 gramos</td>
-</tr>
-<tr>
-    <td>Queso mozzarella</td>
-    <td>1 rebanada</td>
-</tr>
+
+    <tr><td>Pechuga de pollo sin piel</td><td>30 gramos</td></tr>
+    <tr><td>Filete de pescado</td><td>40 gramos</td></tr>
+    <tr><td>Atún en agua</td><td>1/3 lata</td></tr>
+    <tr><td>Camarón cocido</td><td>5 piezas</td></tr>
+    <tr><td>Bistec</td><td>30 gramos</td></tr>
+    <tr><td>Filete de res</td><td>30 gramos</td></tr>
+    <tr><td>Cecina</td><td>25 gramos</td></tr>
+    <tr><td>Clara de huevo</td><td>2 piezas</td></tr>
+    <tr><td>Atún fresco</td><td>30 gramos</td></tr>
+    <tr><td>Camarón gigante</td><td>2 piezas</td></tr>
+    <tr><td>Chambarete de res</td><td>35 gramos</td></tr>
+    <tr><td>Chuleta ahumada</td><td>½ Pieza</td></tr>
+    <tr><td>Cuete de res</td><td>45 gramos</td></tr>
+    <tr><td>Filete de atún</td><td>30 gramos</td></tr>
+    <tr><td>Milanesa de pollo</td><td>30 gramos</td></tr>
+    <tr><td>Pescado fileteado</td><td>40 gramos</td></tr>
+    <tr><td>Aguayón</td><td>30 gramos</td></tr>
+    <tr><td>Carne molida de pollo</td><td>30 gramos</td></tr>
+    <tr><td>Clara de huevo en polvo</td><td>1 ½ cucharada</td></tr>
+    <tr><td>Falda de res</td><td>35 gramos</td></tr>
+    <tr><td>Maciza de res</td><td>25 gramos</td></tr>
+    <tr><td>Queso cottage</td><td>50 gramos</td></tr>
+    <tr><td>Queso mozzarella</td><td>1 rebanada</td></tr>
 </table>
+
 </div>
+
+
+<!-- AOA BAJO -->
+
+<div id="grupoAOABajo">
 
 <h2>AOA — Bajo aporte de grasa</h2>
 
@@ -597,132 +302,47 @@ th, td {
         <th>Porción</th>
     </tr>
 
-    <tr>
-        <td>Arrachera de res</td>
-        <td>30 gramos</td>
-    </tr>
-    <tr>
-        <td>Atún ahumado</td>
-        <td>30 gramos</td>
-    </tr>
-    <tr>
-        <td>Atún blanco en aceite</td>
-        <td>30 gramos</td>
-    </tr>
-    <tr>
-        <td>Atún en aceite drenado</td>
-        <td>1/3 lata</td>
-    </tr>
-    <tr>
-        <td>Barbacoa</td>
-        <td>50 gramos</td>
-    </tr>
-    <tr>
-        <td>Bistec</td>
-        <td>35 gramos</td>
-    </tr>
-    <tr>
-        <td>Carne de cerdo</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Carne de cerdo molida</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Carne de res</td>
-        <td>30 gramos</td>
-    </tr>
-    <tr>
-        <td>Carne de ternera</td>
-        <td>35 gramos</td>
-    </tr>
-    <tr>
-        <td>Carne molida de cerdo</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Chamorro</td>
-        <td>25 gramos</td>
-    </tr>
-    <tr>
-        <td>Chuleta de cerdo</td>
-        <td>½ pieza</td>
-    </tr>
-    <tr>
-        <td>Cuete de ternera</td>
-        <td>35 gramos</td>
-    </tr>
-    <tr>
-        <td>Falda de cerdo</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Filete de cerdo</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Gallina</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Jamón de pavo</td>
-        <td>2 rebanadas</td>
-    </tr>
-    <tr>
-        <td>Lomo de cerdo</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Milanesa de cerdo</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Molida de cerdo</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Molida de res</td>
-        <td>30 gramos</td>
-    </tr>
-    <tr>
-        <td>Pechuga de pollo</td>
-        <td>35 gramos</td>
-    </tr>
-    <tr>
-        <td>Pescado blanco</td>
-        <td>75 gramos</td>
-    </tr>
-    <tr>
-        <td>Pescado fileteado</td>
-        <td>35 gramos</td>
-    </tr>
-    <tr>
-        <td>Pierna de cerdo</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Queso cottage</td>
-        <td>3 cucharadas</td>
-    </tr>
-    <tr>
-        <td>Queso fresco</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Queso panela</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Queso ricotta bajo en grasa</td>
-        <td>3 cucharadas</td>
-    </tr>
-    <tr>
-        <td>Sirloin</td>
-        <td>25 gramos</td>
-    </tr>
+    <tr><td>Arrachera de res</td><td>30 gramos</td></tr>
+    <tr><td>Atún ahumado</td><td>30 gramos</td></tr>
+    <tr><td>Atún blanco en aceite</td><td>30 gramos</td></tr>
+    <tr><td>Atún en aceite drenado</td><td>1/3 lata</td></tr>
+    <tr><td>Barbacoa</td><td>50 gramos</td></tr>
+    <tr><td>Bistec</td><td>35 gramos</td></tr>
+    <tr><td>Carne de cerdo</td><td>40 gramos</td></tr>
+    <tr><td>Carne de cerdo molida</td><td>40 gramos</td></tr>
+    <tr><td>Carne de res</td><td>30 gramos</td></tr>
+    <tr><td>Carne de ternera</td><td>35 gramos</td></tr>
+    <tr><td>Carne molida de cerdo</td><td>40 gramos</td></tr>
+    <tr><td>Chamorro</td><td>25 gramos</td></tr>
+    <tr><td>Chuleta de cerdo</td><td>½ pieza</td></tr>
+    <tr><td>Cuete de ternera</td><td>35 gramos</td></tr>
+    <tr><td>Falda de cerdo</td><td>40 gramos</td></tr>
+    <tr><td>Filete de cerdo</td><td>40 gramos</td></tr>
+    <tr><td>Gallina</td><td>40 gramos</td></tr>
+    <tr><td>Jamón de pavo</td><td>2 rebanadas</td></tr>
+    <tr><td>Lomo de cerdo</td><td>40 gramos</td></tr>
+    <tr><td>Milanesa de cerdo</td><td>40 gramos</td></tr>
+    <tr><td>Molida de cerdo</td><td>40 gramos</td></tr>
+    <tr><td>Molida de res</td><td>30 gramos</td></tr>
+    <tr><td>Pechuga de pollo</td><td>35 gramos</td></tr>
+    <tr><td>Pescado blanco</td><td>75 gramos</td></tr>
+    <tr><td>Pescado fileteado</td><td>35 gramos</td></tr>
+    <tr><td>Pierna de cerdo</td><td>40 gramos</td></tr>
+    <tr><td>Queso cottage</td><td>3 cucharadas</td></tr>
+    <tr><td>Queso fresco</td><td>40 gramos</td></tr>
+    <tr><td>Queso panela</td><td>40 gramos</td></tr>
+    <tr><td>Queso ricotta bajo en grasa</td><td>3 cucharadas</td></tr>
+    <tr><td>Sirloin</td><td>25 gramos</td></tr>
 </table>
-        <h2>AOA — Moderado aporte de grasa</h2>
+
+</div>
+
+
+<!-- AOA MODERADO -->
+
+<div id="grupoAOAModerado">
+
+<h2>AOA — Moderado aporte de grasa</h2>
 
 <table>
     <tr>
@@ -730,76 +350,33 @@ th, td {
         <th>Porción</th>
     </tr>
 
-    <tr>
-        <td>Huevo</td>
-        <td>1 pieza</td>
-    </tr>
-    <tr>
-        <td>Bistec de bola</td>
-        <td>25 gramos</td>
-    </tr>
-    <tr>
-        <td>Carne molida extra-magra</td>
-        <td>30 gramos</td>
-    </tr>
-    <tr>
-        <td>Pecho de res</td>
-        <td>50 gramos</td>
-    </tr>
-    <tr>
-        <td>Costillitas de cerdo</td>
-        <td>50 gramos</td>
-    </tr>
-    <tr>
-        <td>Longaniza</td>
-        <td>45 gramos</td>
-    </tr>
-    <tr>
-        <td>Pierna de pollo con piel cocida</td>
-        <td>1/3 pieza</td>
-    </tr>
-    <tr>
-        <td>Muslo de pollo con piel cocida</td>
-        <td>1/3 pieza</td>
-    </tr>
-    <tr>
-        <td>Salmón</td>
-        <td>30 gramos</td>
-    </tr>
-    <tr>
-        <td>Sardina en tomate</td>
-        <td>1 pieza</td>
-    </tr>
-    <tr>
-        <td>Sierra</td>
-        <td>50 gramos</td>
-    </tr>
-    <tr>
-        <td>Queso blanco</td>
-        <td>35 gramos</td>
-    </tr>
-    <tr>
-        <td>Queso mozzarella semidescremada</td>
-        <td>30 gramos</td>
-    </tr>
-    <tr>
-        <td>Queso Ricotta semidescremada</td>
-        <td>55 gramos</td>
-    </tr>
-    <tr>
-        <td>Requesón</td>
-        <td>3 ½ cucharadas</td>
-    </tr>
-    <tr>
-        <td>Salchicha de pavo</td>
-        <td>1 pieza</td>
-    </tr>
-    <tr>
-        <td>Queso parmesano rallado</td>
-        <td>3 ½ cucharadas</td>
-    </tr>
+    <tr><td>Huevo</td><td>1 pieza</td></tr>
+    <tr><td>Bistec de bola</td><td>25 gramos</td></tr>
+    <tr><td>Carne molida extra-magra</td><td>30 gramos</td></tr>
+    <tr><td>Pecho de res</td><td>50 gramos</td></tr>
+    <tr><td>Costillitas de cerdo</td><td>50 gramos</td></tr>
+    <tr><td>Longaniza</td><td>45 gramos</td></tr>
+    <tr><td>Pierna de pollo con piel cocida</td><td>1/3 pieza</td></tr>
+    <tr><td>Muslo de pollo con piel cocida</td><td>1/3 pieza</td></tr>
+    <tr><td>Salmón</td><td>30 gramos</td></tr>
+    <tr><td>Sardina en tomate</td><td>1 pieza</td></tr>
+    <tr><td>Sierra</td><td>50 gramos</td></tr>
+    <tr><td>Queso blanco</td><td>35 gramos</td></tr>
+    <tr><td>Queso mozzarella semidescremada</td><td>30 gramos</td></tr>
+    <tr><td>Queso Ricotta semidescremada</td><td>55 gramos</td></tr>
+    <tr><td>Requesón</td><td>3 ½ cucharadas</td></tr>
+    <tr><td>Salchicha de pavo</td><td>1 pieza</td></tr>
+    <tr><td>Queso parmesano rallado</td><td>3 ½ cucharadas</td></tr>
 </table>
-        <h2>AOA — Alto aporte de grasa</h2>
+
+</div>
+
+
+<!-- AOA ALTO -->
+
+<div id="grupoAOAAlto">
+
+<h2>AOA — Alto aporte de grasa</h2>
 
 <table>
     <tr>
@@ -807,35 +384,28 @@ th, td {
         <th>Porción</th>
     </tr>
 
-    <tr>
-        <td>Alitas de pollo</td>
-        <td>2 piezas</td>
-    </tr>
-    <tr>
-        <td>Carne de res</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Carne molida</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Cecina de res</td>
-        <td>50 gramos</td>
-    </tr>
-    <tr>
-        <td>Costilla de res</td>
-        <td>40 gramos</td>
-    </tr>
-    <tr>
-        <td>Nugget de pollo</td>
-        <td>2 piezas</td>
-    </tr>
-    <tr>
-        <td>Peperoni</td>
-        <td>10 rebanadas</td>
-        <table>
-            <h2>Leche semidescremada</h2>
+    <tr><td>Alitas de pollo</td><td>2 piezas</td></tr>
+    <tr><td>Carne de res</td><td>40 gramos</td></tr>
+    <tr><td>Carne molida</td><td>40 gramos</td></tr>
+    <tr><td>Cecina de res</td><td>50 gramos</td></tr>
+    <tr><td>Costilla de res</td><td>40 gramos</td></tr>
+    <tr><td>Nugget de pollo</td><td>2 piezas</td></tr>
+    <tr><td>Peperoni</td><td>10 rebanadas</td></tr>
+    <tr><td>Queso amarillo</td><td>2 rebanadas</td></tr>
+    <tr><td>Queso cheddar</td><td>¾ rebanada</td></tr>
+    <tr><td>Queso chihuahua</td><td>1 rebanada</td></tr>
+    <tr><td>Queso manchego</td><td>25 gramos</td></tr>
+    <tr><td>Salchicha</td><td>½ pieza</td></tr>
+</table>
+
+</div>
+
+
+<!-- LECHE -->
+
+<div id="grupoLeche">
+
+<h2>Leche semidescremada</h2>
 
 <table>
     <tr>
@@ -843,16 +413,18 @@ th, td {
         <th>Porción</th>
     </tr>
 
-    <tr>
-        <td>Leche semidescremada</td>
-        <td>1 taza</td>
-    </tr>
-    <tr>
-        <td>Yogurth Oikos griego natural</td>
-        <td>Envase de 150 gramos</td>
-    </tr>
+    <tr><td>Leche semidescremada</td><td>1 taza</td></tr>
+    <tr><td>Yogurth Oikos griego natural</td><td>Envase de 150 gramos</td></tr>
 </table>
-            <h2>Aceites y grasas — Sin proteína</h2>
+
+</div>
+
+
+<!-- ACEITES SIN PROTEÍNA -->
+
+<div id="grupoAceitesSinProteina">
+
+<h2>Aceites y grasas — Sin proteína</h2>
 
 <table>
     <tr>
@@ -860,87 +432,36 @@ th, td {
         <th>Porción</th>
     </tr>
 
-    <tr>
-        <td>Aguacate Hass</td>
-        <td>1/3 pieza</td>
-    </tr>
-    <tr>
-        <td>Aceituna</td>
-        <td>5 piezas</td>
-    </tr>
-    <tr>
-        <td>Aderezo</td>
-        <td>½ cucharada</td>
-    </tr>
-    <tr>
-        <td>Coco rallado</td>
-        <td>1 ½ cucharada</td>
-    </tr>
-    <tr>
-        <td>Crema ácida</td>
-        <td>2 cucharadas</td>
-    </tr>
-    <tr>
-        <td>Guacamole</td>
-        <td>2 cucharadas</td>
-    </tr>
-    <tr>
-        <td>Mantequilla</td>
-        <td>1 ½ cucharadita</td>
-    </tr>
-    <tr>
-        <td>Mayonesa</td>
-        <td>1 cucharadita</td>
-    </tr>
-    <tr>
-        <td>Media crema</td>
-        <td>2 cucharaditas</td>
-    </tr>
-    <tr>
-        <td>Tocino</td>
-        <td>1 rebanada</td>
-    </tr>
-    <tr>
-        <td>Vinagreta</td>
-        <td>½ cucharada</td>
-    </tr>
-    <tr>
-        <td>Queso Philadelphia</td>
-        <td>1 cucharada</td>
-    </tr>
-    <tr>
-        <td>Queso crema</td>
-        <td>1 cucharada</td>
-    </tr>
-    <tr>
-        <td>Aceituna negra sin hueso</td>
-        <td>5 piezas</td>
-    <tr>
-        <td>Aceite de oliva</td>
-        <td>1 cucharadita</td>
-    </tr>
-    <tr>
-        <td>Aceite de palma</td>
-        <td>1 cucharadita</td>
-    </tr>
-    <tr>
-        <td>Aceite de girasol</td>
-        <td>1 cucharadita</td>
-    </tr>
-    <tr>
-        <td>Aceite de cacahuate</td>
-        <td>1 cucharadita</td>
-    </tr>
-    <tr>
-        <td>Aderezo Ranch</td>
-        <td>½ cucharadita</td>
-    </tr>
-    <tr>
-        <td>Aderezo César</td>
-        <td>½ cucharadita</td>
-    </tr>
+    <tr><td>Aguacate Hass</td><td>1/3 pieza</td></tr>
+    <tr><td>Aceituna</td><td>5 piezas</td></tr>
+    <tr><td>Aderezo</td><td>½ cucharada</td></tr>
+    <tr><td>Coco rallado</td><td>1 ½ cucharada</td></tr>
+    <tr><td>Crema ácida</td><td>2 cucharadas</td></tr>
+    <tr><td>Guacamole</td><td>2 cucharadas</td></tr>
+    <tr><td>Mantequilla</td><td>1 ½ cucharadita</td></tr>
+    <tr><td>Mayonesa</td><td>1 cucharadita</td></tr>
+    <tr><td>Media crema</td><td>2 cucharaditas</td></tr>
+    <tr><td>Tocino</td><td>1 rebanada</td></tr>
+    <tr><td>Vinagreta</td><td>½ cucharada</td></tr>
+    <tr><td>Queso Philadelphia</td><td>1 cucharada</td></tr>
+    <tr><td>Queso crema</td><td>1 cucharada</td></tr>
+    <tr><td>Aceituna negra sin hueso</td><td>5 piezas</td></tr>
+    <tr><td>Aceite de oliva</td><td>1 cucharadita</td></tr>
+    <tr><td>Aceite de palma</td><td>1 cucharadita</td></tr>
+    <tr><td>Aceite de girasol</td><td>1 cucharadita</td></tr>
+    <tr><td>Aceite de cacahuate</td><td>1 cucharadita</td></tr>
+    <tr><td>Aderezo Ranch</td><td>½ cucharadita</td></tr>
+    <tr><td>Aderezo César</td><td>½ cucharadita</td></tr>
 </table>
-        <h2>Aceites y grasas — Con proteína</h2>
+
+</div>
+
+
+<!-- ACEITES CON PROTEÍNA -->
+
+<div id="grupoAceitesConProteina">
+
+<h2>Aceites y grasas — Con proteína</h2>
 
 <table>
     <tr>
@@ -948,64 +469,30 @@ th, td {
         <th>Porción</th>
     </tr>
 
-    <tr>
-        <td>Ajonjolí</td>
-        <td>4 cucharaditas</td>
-    </tr>
-    <tr>
-        <td>Almendra</td>
-        <td>10 piezas</td>
-    </tr>
-    <tr>
-        <td>Avellana</td>
-        <td>9 piezas</td>
-    </tr>
-    <tr>
-        <td>Cacahuate</td>
-        <td>14 piezas</td>
-    </tr>
-    <tr>
-        <td>Chía</td>
-        <td>7 cucharadas</td>
-    </tr>
-    <tr>
-        <td>Chorizo</td>
-        <td>15 gramos</td>
-    </tr>
-    <tr>
-        <td>Nuez entera</td>
-        <td>3 piezas</td>
-    </tr>
-    <tr>
-        <td>Pepitas</td>
-        <td>60 piezas</td>
-    </tr>
-    <tr>
-        <td>Crema de almendras</td>
-        <td>1 cucharada</td>
-    </tr>
-    <tr>
-        <td>Pistache</td>
-        <td>18 piezas</td>
-    </tr>
-    <tr>
-        <td>Semilla de girasol</td>
-        <td>4 cucharaditas</td>
-    </tr>
-    <tr>
-        <td>Piñón</td>
-        <td>1 cucharada</td>
-    </tr>
-    <tr>
-        <td>Castaña</td>
-        <td>1 ½ pieza</td>
-    </tr>
-    <tr>
-        <td>Vinagreta</td>
-        <td>1 ½ cucharadita</td>
-    </tr>
+    <tr><td>Ajonjolí</td><td>4 cucharaditas</td></tr>
+    <tr><td>Almendra</td><td>10 piezas</td></tr>
+    <tr><td>Avellana</td><td>9 piezas</td></tr>
+    <tr><td>Cacahuate</td><td>14 piezas</td></tr>
+    <tr><td>Chía</td><td>7 cucharadas</td></tr>
+    <tr><td>Chorizo</td><td>15 gramos</td></tr>
+    <tr><td>Nuez entera</td><td>3 piezas</td></tr>
+    <tr><td>Pepitas</td><td>60 piezas</td></tr>
+    <tr><td>Crema de almendras</td><td>1 cucharada</td></tr>
+    <tr><td>Pistache</td><td>18 piezas</td></tr>
+    <tr><td>Semilla de girasol</td><td>4 cucharaditas</td></tr>
+    <tr><td>Piñón</td><td>1 cucharada</td></tr>
+    <tr><td>Castaña</td><td>1 ½ pieza</td></tr>
+    <tr><td>Vinagreta</td><td>1 ½ cucharadita</td></tr>
 </table>
-            <h2>Azúcares — Sin grasa</h2>
+
+</div>
+
+
+<!-- AZÚCARES -->
+
+<div id="grupoAzucares">
+
+<h2>Azúcares — Sin grasa</h2>
 
 <table>
     <tr>
@@ -1013,43 +500,20 @@ th, td {
         <th>Porción</th>
     </tr>
 
-    <tr>
-        <td>Azúcar de mesa</td>
-        <td>2 cucharaditas</td>
-    </tr>
-    <tr>
-        <td>Miel</td>
-        <td>2 cucharaditas</td>
-    </tr>
-    <tr>
-        <td>Panditas</td>
-        <td>1/3 bolsa</td>
-    </tr>
-    <tr>
-        <td>Paleta helada de agua</td>
-        <td>1 pieza</td>
-    </tr>
-    <tr>
-        <td>Salsa catsup</td>
-        <td>2 cucharadas</td>
-    </tr>
-    <tr>
-        <td>Mermelada</td>
-        <td>2 ½ cucharaditas</td>
-    </tr>
-    <tr>
-        <td>Malvavisco</td>
-        <td>2 piezas</td>
-    </tr>
-    <tr>
-        <td>Gomitas</td>
-        <td>4 piezas</td>
-    </tr>
-    <tr>
-        <td>Gelatina</td>
-        <td>1/3 taza</td>
-    </tr>
+    <tr><td>Azúcar de mesa</td><td>2 cucharaditas</td></tr>
+    <tr><td>Miel</td><td>2 cucharaditas</td></tr>
+    <tr><td>Panditas</td><td>1/3 bolsa</td></tr>
+    <tr><td>Paleta helada de agua</td><td>1 pieza</td></tr>
+    <tr><td>Salsa catsup</td><td>2 cucharadas</td></tr>
+    <tr><td>Mermelada</td><td>2 ½ cucharaditas</td></tr>
+    <tr><td>Malvavisco</td><td>2 piezas</td></tr>
+    <tr><td>Gomitas</td><td>4 piezas</td></tr>
+    <tr><td>Gelatina</td><td>1/3 taza</td></tr>
 </table>
+
+</div>
+
+
 <script>
 
 function actualizarGrupos() {
@@ -1063,13 +527,37 @@ function actualizarGrupos() {
     document.getElementById("grupoCerealesSinGrasa").style.display =
         document.getElementById("checkCerealesSinGrasa").checked ? "block" : "none";
 
+    document.getElementById("grupoCerealesConGrasa").style.display =
+        document.getElementById("checkCerealesConGrasa").checked ? "block" : "none";
+
     document.getElementById("grupoLeguminosas").style.display =
         document.getElementById("checkLeguminosas").checked ? "block" : "none";
 
     document.getElementById("grupoAOAMuyBajo").style.display =
         document.getElementById("checkAOAMuyBajo").checked ? "block" : "none";
 
+    document.getElementById("grupoAOABajo").style.display =
+        document.getElementById("checkAOABajo").checked ? "block" : "none";
+
+    document.getElementById("grupoAOAModerado").style.display =
+        document.getElementById("checkAOAModerado").checked ? "block" : "none";
+
+    document.getElementById("grupoAOAAlto").style.display =
+        document.getElementById("checkAOAAlto").checked ? "block" : "none";
+
+    document.getElementById("grupoLeche").style.display =
+        document.getElementById("checkLeche").checked ? "block" : "none";
+
+    document.getElementById("grupoAceitesSinProteina").style.display =
+        document.getElementById("checkAceitesSinProteina").checked ? "block" : "none";
+
+    document.getElementById("grupoAceitesConProteina").style.display =
+        document.getElementById("checkAceitesConProteina").checked ? "block" : "none";
+
+    document.getElementById("grupoAzucares").style.display =
+        document.getElementById("checkAzucares").checked ? "block" : "none";
 }
+
 
 document.getElementById("checkVerduras").addEventListener("change", actualizarGrupos);
 
@@ -1077,12 +565,30 @@ document.getElementById("checkFrutas").addEventListener("change", actualizarGrup
 
 document.getElementById("checkCerealesSinGrasa").addEventListener("change", actualizarGrupos);
 
+document.getElementById("checkCerealesConGrasa").addEventListener("change", actualizarGrupos);
+
 document.getElementById("checkLeguminosas").addEventListener("change", actualizarGrupos);
 
 document.getElementById("checkAOAMuyBajo").addEventListener("change", actualizarGrupos);
 
+document.getElementById("checkAOABajo").addEventListener("change", actualizarGrupos);
+
+document.getElementById("checkAOAModerado").addEventListener("change", actualizarGrupos);
+
+document.getElementById("checkAOAAlto").addEventListener("change", actualizarGrupos);
+
+document.getElementById("checkLeche").addEventListener("change", actualizarGrupos);
+
+document.getElementById("checkAceitesSinProteina").addEventListener("change", actualizarGrupos);
+
+document.getElementById("checkAceitesConProteina").addEventListener("change", actualizarGrupos);
+
+document.getElementById("checkAzucares").addEventListener("change", actualizarGrupos);
+
+
 actualizarGrupos();
 
 </script>
+
 </body>
 </html>
