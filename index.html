@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -496,7 +497,7 @@
     </div>
 
 
-    <!-- LECHE -->
+    <!-- LECHE SEMIDESCREMADA -->
 
     <div class="grupo" id="grupoLecheSemidescremada">
 
@@ -515,7 +516,7 @@
     </div>
 
 
-    <!-- ACEITES SIN PROTEÍNA -->
+    <!-- ACEITES Y GRASAS SIN PROTEÍNA -->
 
     <div class="grupo" id="grupoAceitesSinProteina">
 
@@ -552,7 +553,7 @@
     </div>
 
 
-    <!-- ACEITES CON PROTEÍNA -->
+    <!-- ACEITES Y GRASAS CON PROTEÍNA -->
 
     <div class="grupo" id="grupoAceitesConProteina">
 
@@ -583,7 +584,7 @@
     </div>
 
 
-    <!-- AZÚCARES -->
+    <!-- AZÚCARES SIN GRASA -->
 
     <div class="grupo" id="grupoAzucaresSinGrasa">
 
@@ -596,4 +597,75 @@
             </tr>
 
             <tr><td>Azúcar de mesa</td><td>2 cucharaditas</td></tr>
-            <tr><td>Miel</td><td>2 cucha
+            <tr><td>Miel</td><td>2 cucharaditas</td></tr>
+            <tr><td>Panditas</td><td>1/3 bolsa</td></tr>
+            <tr><td>Paleta helada de agua</td><td>1 pieza</td></tr>
+            <tr><td>Salsa catsup</td><td>2 cucharadas</td></tr>
+            <tr><td>Mermelada</td><td>2 1/2 cucharaditas</td></tr>
+            <tr><td>Malvavisco</td><td>2 piezas</td></tr>
+            <tr><td>Gomitas</td><td>4 piezas</td></tr>
+            <tr><td>Gelatina</td><td>1/3 taza</td></tr>
+
+        </table>
+    </div>
+
+
+    <!-- FUNCIONAMIENTO DE LAS CASILLAS -->
+
+    <script>
+
+        const relaciones = {
+            checkVerduras: "grupoVerduras",
+            checkFrutas: "grupoFrutas",
+            checkCerealesSinGrasa: "grupoCerealesSinGrasa",
+            checkCerealesConGrasa: "grupoCerealesConGrasa",
+            checkLeguminosas: "grupoLeguminosas",
+            checkAOAMuyBajo: "grupoAOAMuyBajo",
+            checkAOABajo: "grupoAOABajo",
+            checkAOAModerado: "grupoAOAModerado",
+            checkAOAAlto: "grupoAOAAlto",
+            checkLecheSemidescremada: "grupoLecheSemidescremada",
+            checkAceitesSinProteina: "grupoAceitesSinProteina",
+            checkAceitesConProteina: "grupoAceitesConProteina",
+            checkAzucaresSinGrasa: "grupoAzucaresSinGrasa"
+        };
+
+        function actualizarGrupos() {
+
+            for (const checkId in relaciones) {
+
+                const checkbox = document.getElementById(checkId);
+                const grupo = document.getElementById(relaciones[checkId]);
+
+                if (checkbox && grupo) {
+
+                    if (checkbox.checked) {
+                        grupo.style.display = "block";
+                    } else {
+                        grupo.style.display = "none";
+                    }
+
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            for (const checkId in relaciones) {
+
+                const checkbox = document.getElementById(checkId);
+
+                if (checkbox) {
+                    checkbox.addEventListener("change", actualizarGrupos);
+                }
+            }
+
+            actualizarGrupos();
+
+        });
+
+    </script>
+
+</body>
+</html>
+```
