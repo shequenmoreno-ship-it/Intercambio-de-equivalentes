@@ -17,6 +17,9 @@
 <label>
     <input type="checkbox" id="checkFrutas"> Frutas
 </label><br>
+    
+    <input type="checkbox" id="checkCerealesSinGrasa"> Cereales sin grasa
+    <br>
 
 <label>
     <input type="checkbox"> Cereales con grasa
@@ -278,6 +281,7 @@
 </tr>
     <table>
         </div>
+        <div id="grupoCerealesSinGrasa">
         <h2>Cereales sin grasa</h2>
 
 <table>
@@ -378,6 +382,7 @@
     <td>½ taza</td>
 </tr>
     <table>
+        </div>
      <h2>Cereales con grasa</h2>
 
 <table>
@@ -1039,6 +1044,8 @@ function actualizarGrupos() {
 document.getElementById("checkVerduras").addEventListener("change", actualizarGrupos);
 
 document.getElementById("checkFrutas").addEventListener("change", actualizarGrupos);
+    document.getElementById("grupoCerealesSinGrasa").style.display =
+    document.getElementById("checkCerealesSinGrasa").checked ? "block" : "none";
 
 actualizarGrupos();
 
