@@ -24,7 +24,9 @@
             margin-top: 0;
         }
 
-        .seleccion {
+        .seleccion,
+        .distribucion,
+        .grupo {
             background: white;
             padding: 20px;
             border-radius: 12px;
@@ -67,6 +69,10 @@
             background: #472d58;
         }
 
+        .boton-secundario {
+            background: #80659a;
+        }
+
         .resultado-enlace {
             display: none;
             margin-top: 20px;
@@ -91,11 +97,6 @@
 
         .grupo {
             display: none;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             overflow-x: auto;
         }
 
@@ -140,6 +141,138 @@
             font-weight: bold;
             margin-top: 10px;
         }
+
+        /* DISTRIBUCIÓN */
+
+        #panelDistribucion {
+            display: none;
+        }
+
+        .tabla-distribucion {
+            min-width: 850px;
+        }
+
+        .tabla-distribucion input {
+            width: 65px;
+            padding: 7px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .tabla-distribucion input:focus {
+            outline: none;
+            border-color: #5b3a70;
+        }
+
+        .total-asignado {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .correcto {
+            color: #39804a;
+        }
+
+        .incorrecto {
+            color: #c0392b;
+        }
+
+        .pendiente {
+            color: #777;
+        }
+
+        .aviso-distribucion {
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            background: #f8f2fb;
+            color: #5b3a70;
+        }
+
+        .error-distribucion {
+            background: #fdeeee;
+            color: #a93226;
+        }
+
+        .exito-distribucion {
+            background: #edf8ef;
+            color: #31743e;
+        }
+
+        /* VISTA DE PACIENTE */
+
+        #distribucionPaciente {
+            display: none;
+        }
+
+        .tiempo-comida {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .tiempo-comida h3 {
+            color: #5b3a70;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .equivalente-paciente {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f7f2fa;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 7px;
+        }
+
+        .cantidad-equivalente {
+            font-weight: bold;
+            color: #5b3a70;
+            white-space: nowrap;
+        }
+
+        .explicacion-paciente {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .boton-tabla {
+            background: #80659a;
+            margin: 10px 0 20px;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .seleccion,
+            .distribucion,
+            .grupo {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .equivalente-paciente {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+        }
     </style>
 </head>
 
@@ -148,11 +281,13 @@
     <h1>Intercambio de Equivalentes</h1>
 
     <p class="nota" id="textoPrincipal">
-        Selecciona los grupos de alimentos que deseas consultar.
+        Selecciona los grupos de alimentos que deseas utilizar para tu paciente.
     </p>
 
 
+    <!-- ========================================================= -->
     <!-- PANEL PARA LA NUTRIÓLOGA -->
+    <!-- ========================================================= -->
 
     <div class="seleccion" id="panelSeleccion">
 
@@ -227,6 +362,58 @@
 
         </div>
 
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- PANEL DE DISTRIBUCIÓN -->
+    <!-- ========================================================= -->
+
+    <div class="distribucion" id="panelDistribucion">
+
+        <h2>Distribución de equivalentes</h2>
+
+        <p>
+            Indica cuántos equivalentes necesita tu paciente de cada grupo al día
+            y distribúyelos entre los diferentes tiempos de comida.
+        </p>
+
+        <div style="overflow-x:auto;">
+
+            <table class="tabla-distribucion">
+
+                <thead>
+                    <tr>
+                        <th>Grupo</th>
+                        <th>Total/día</th>
+                        <th>Desayuno</th>
+                        <th>Col. AM</th>
+                        <th>Comida</th>
+                        <th>Col. PM</th>
+                        <th>Cena</th>
+                        <th>Asignado</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaDistribucionBody"></tbody>
+
+            </table>
+
+        </div>
+
+        <div class="aviso-distribucion" id="avisoDistribucion">
+            Selecciona los grupos y coloca los equivalentes diarios.
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- BOTÓN PARA GENERAR ENLACE -->
+    <!-- ========================================================= -->
+
+    <div class="seleccion" id="panelGenerar">
+
         <button class="boton" onclick="generarEnlace()">
             🔗 Generar enlace para paciente
         </button>
@@ -254,21 +441,71 @@
     </div>
 
 
-    <!-- MENSAJE PARA LA PACIENTE -->
+    <!-- ========================================================= -->
+    <!-- VISTA DEL PACIENTE -->
+    <!-- ========================================================= -->
 
     <div
         class="vista-paciente"
         id="mensajePaciente"
         style="display:none;"
     >
-        <h2>Lista de equivalentes</h2>
-        <p>
-            Estos son los grupos de alimentos seleccionados para ti.
-        </p>
+
+        <h2>🌸 Mi distribución de equivalentes</h2>
+
+        <div class="explicacion-paciente">
+
+            <p>
+                Los equivalentes que aparecen aquí corresponden a la distribución
+                indicada por tu nutrióloga.
+            </p>
+
+            <p>
+                No necesitas consumir todos los alimentos de una lista.
+                Puedes elegir las opciones que prefieras para completar
+                los equivalentes indicados.
+            </p>
+
+        </div>
+
     </div>
 
 
+    <!-- DISTRIBUCIÓN PARA PACIENTE -->
+
+    <div id="distribucionPaciente">
+
+        <div class="tiempo-comida" id="pacienteDesayuno">
+            <h3>🌅 Desayuno</h3>
+            <div class="lista-tiempo"></div>
+        </div>
+
+        <div class="tiempo-comida" id="pacienteColacionAM">
+            <h3>☕ Colación AM</h3>
+            <div class="lista-tiempo"></div>
+        </div>
+
+        <div class="tiempo-comida" id="pacienteComida">
+            <h3>🍽️ Comida</h3>
+            <div class="lista-tiempo"></div>
+        </div>
+
+        <div class="tiempo-comida" id="pacienteColacionPM">
+            <h3>☕ Colación PM</h3>
+            <div class="lista-tiempo"></div>
+        </div>
+
+        <div class="tiempo-comida" id="pacienteCena">
+            <h3>🌙 Cena</h3>
+            <div class="lista-tiempo"></div>
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
     <!-- VERDURAS -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoVerduras">
 
@@ -300,12 +537,14 @@
             <tr><td>Nopal</td><td>1 taza</td></tr>
             <tr><td>Pepino</td><td>1 taza</td></tr>
             <tr><td>Rábano</td><td>1 taza</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- FRUTAS -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoFrutas">
 
@@ -345,12 +584,14 @@
             <tr><td>Guayaba</td><td>3 piezas</td></tr>
             <tr><td>Cereza</td><td>20 piezas</td></tr>
             <tr><td>Agua de coco</td><td>1 1/2 taza</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- CEREALES SIN GRASA -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoCerealesSinGrasa">
 
@@ -385,12 +626,14 @@
             <tr><td>Maicena</td><td>2 cdas</td></tr>
             <tr><td>Hojuelas de maíz</td><td>3/4 taza</td></tr>
             <tr><td>Croutones</td><td>1/2 taza</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- CEREALES CON GRASA -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoCerealesConGrasa">
 
@@ -414,12 +657,14 @@
             <tr><td>Wrap</td><td>1/2 pieza</td></tr>
             <tr><td>Churros</td><td>1/2 pieza</td></tr>
             <tr><td>Bisquet</td><td>1/2 pieza</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- LEGUMINOSAS -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoLeguminosas">
 
@@ -436,12 +681,14 @@
             <tr><td>Garbanzo</td><td>1/2 taza</td></tr>
             <tr><td>Lenteja cocida</td><td>1/2 taza</td></tr>
             <tr><td>Hummus</td><td>5 cucharadas</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- AOA MUY BAJO -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoAOAMuyBajo">
 
@@ -476,12 +723,14 @@
             <tr><td>Maciza de res</td><td>25 g</td></tr>
             <tr><td>Queso cottage</td><td>50 g</td></tr>
             <tr><td>Queso mozzarella</td><td>1 rebanada</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- AOA BAJO -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoAOABajo">
 
@@ -524,12 +773,14 @@
             <tr><td>Queso panela</td><td>40 g</td></tr>
             <tr><td>Queso ricotta bajo en grasa</td><td>3 cda</td></tr>
             <tr><td>Sirloin</td><td>25 g</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- AOA MODERADO -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoAOAModerado">
 
@@ -558,12 +809,14 @@
             <tr><td>Requesón</td><td>3 1/2 cdas</td></tr>
             <tr><td>Salchicha de pavo</td><td>1 pieza</td></tr>
             <tr><td>Queso parmesano rallado</td><td>3 1/2 cdas</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- AOA ALTO -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoAOAAlto">
 
@@ -587,12 +840,14 @@
             <tr><td>Queso chihuahua</td><td>1 rebanada</td></tr>
             <tr><td>Queso manchego</td><td>25 g</td></tr>
             <tr><td>Salchicha</td><td>1/2 pieza</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- LECHE SEMIDESCREMADA -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoLecheSemidescremada">
 
@@ -606,12 +861,14 @@
 
             <tr><td>Leche semidescremada</td><td>1 taza</td></tr>
             <tr><td>Yogurth Oikos estilo griego natural sin azúcar</td><td>Envase de 150 gramos</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- ACEITES Y GRASAS SIN PROTEÍNA -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoAceitesSinProteina">
 
@@ -643,12 +900,14 @@
             <tr><td>Aceite de cacahuate</td><td>1 cucharadita</td></tr>
             <tr><td>Aderezo Ranch</td><td>1/2 cucharadita</td></tr>
             <tr><td>Aderezo César</td><td>1/2 cucharadita</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- ACEITES Y GRASAS CON PROTEÍNA -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoAceitesConProteina">
 
@@ -674,12 +933,14 @@
             <tr><td>Piñón</td><td>1 cucharada</td></tr>
             <tr><td>Castaña</td><td>1 1/2 pieza</td></tr>
             <tr><td>Vinagreta</td><td>1 1/2 cucharadita</td></tr>
-
         </table>
+
     </div>
 
 
-    <!-- AZÚCARES SIN GRASA -->
+    <!-- ========================================================= -->
+    <!-- AZÚCARES -->
+    <!-- ========================================================= -->
 
     <div class="grupo" id="grupoAzucaresSinGrasa">
 
@@ -700,16 +961,23 @@
             <tr><td>Malvavisco</td><td>2 piezas</td></tr>
             <tr><td>Gomitas</td><td>4 piezas</td></tr>
             <tr><td>Gelatina</td><td>1/3 taza</td></tr>
-
         </table>
+
     </div>
 
 
+    <!-- ========================================================= -->
     <!-- JAVASCRIPT -->
+    <!-- ========================================================= -->
 
     <script>
 
+        /* ---------------------------------------------------------
+           RELACIÓN ENTRE CHECKBOX Y GRUPO
+        --------------------------------------------------------- */
+
         const relaciones = {
+
             checkVerduras: "grupoVerduras",
             checkFrutas: "grupoFrutas",
             checkCerealesSinGrasa: "grupoCerealesSinGrasa",
@@ -723,195 +991,780 @@
             checkAceitesSinProteina: "grupoAceitesSinProteina",
             checkAceitesConProteina: "grupoAceitesConProteina",
             checkAzucaresSinGrasa: "grupoAzucaresSinGrasa"
+
         };
 
 
-        /* MOSTRAR U OCULTAR GRUPOS */
+        /* ---------------------------------------------------------
+           NOMBRES DE LOS GRUPOS
+        --------------------------------------------------------- */
+
+        const nombresGrupos = {
+
+            grupoVerduras: "Verduras",
+            grupoFrutas: "Frutas",
+            grupoCerealesSinGrasa: "Cereales sin grasa",
+            grupoCerealesConGrasa: "Cereales con grasa",
+            grupoLeguminosas: "Leguminosas",
+            grupoAOAMuyBajo: "AOA - Muy bajo aporte de grasa",
+            grupoAOABajo: "AOA - Bajo aporte de grasa",
+            grupoAOAModerado: "AOA - Moderado aporte de grasa",
+            grupoAOAAlto: "AOA - Alto aporte de grasa",
+            grupoLecheSemidescremada: "Leche semidescremada",
+            grupoAceitesSinProteina: "Aceites y grasas - Sin proteína",
+            grupoAceitesConProteina: "Aceites y grasas - Con proteína",
+            grupoAzucaresSinGrasa: "Azúcares - Sin grasa"
+
+        };
+
+
+        /* ---------------------------------------------------------
+           ACTUALIZAR GRUPOS VISIBLES
+        --------------------------------------------------------- */
 
         function actualizarGrupos() {
 
-            for (const checkId in relaciones) {
+            Object.keys(relaciones).forEach(function(checkId) {
 
                 const checkbox = document.getElementById(checkId);
-                const grupo = document.getElementById(relaciones[checkId]);
+                const grupoId = relaciones[checkId];
+                const grupo = document.getElementById(grupoId);
 
-                if (checkbox && grupo) {
-
-                    if (checkbox.checked) {
-                        grupo.style.display = "block";
-                    } else {
-                        grupo.style.display = "none";
-                    }
-
+                if (checkbox.checked) {
+                    grupo.style.display = "block";
+                } else {
+                    grupo.style.display = "none";
                 }
-            }
+
+            });
+
+            actualizarTablaDistribucion();
         }
 
 
-        /* GENERAR ENLACE PERSONALIZADO */
+        /* ---------------------------------------------------------
+           OBTENER GRUPOS SELECCIONADOS
+        --------------------------------------------------------- */
 
-        function generarEnlace() {
+        function obtenerGruposSeleccionados() {
 
             const seleccionados = [];
 
-            for (const checkId in relaciones) {
+            Object.keys(relaciones).forEach(function(checkId) {
 
                 const checkbox = document.getElementById(checkId);
 
-                if (checkbox && checkbox.checked) {
-                    seleccionados.push(checkId.replace("check", ""));
+                if (checkbox.checked) {
+                    seleccionados.push(relaciones[checkId]);
                 }
-            }
+
+            });
+
+            return seleccionados;
+        }
 
 
-            if (seleccionados.length === 0) {
+        /* ---------------------------------------------------------
+           CREAR TABLA DE DISTRIBUCIÓN
+        --------------------------------------------------------- */
 
-                alert("Selecciona al menos un grupo de alimentos.");
+        function actualizarTablaDistribucion() {
 
+            const grupos = obtenerGruposSeleccionados();
+
+            const panel = document.getElementById("panelDistribucion");
+            const tbody = document.getElementById("tablaDistribucionBody");
+
+            tbody.innerHTML = "";
+
+            if (grupos.length === 0) {
+
+                panel.style.display = "none";
+                revisarDistribucion();
                 return;
+
             }
 
+            panel.style.display = "block";
 
-            const urlActual = window.location.origin + window.location.pathname;
+            grupos.forEach(function(grupoId) {
 
-            const enlace = urlActual + "?grupos=" + seleccionados.join(",");
+                const fila = document.createElement("tr");
 
+                fila.innerHTML = `
 
-            document.getElementById("enlaceGenerado").value = enlace;
+                    <td>
+                        <strong>${nombresGrupos[grupoId]}</strong>
+                    </td>
 
-            document.getElementById("resultadoEnlace").style.display = "block";
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value=""
+                            placeholder="0"
+                            class="total-dia"
+                            data-grupo="${grupoId}"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="0"
+                            class="distribucion-input"
+                            data-grupo="${grupoId}"
+                            data-tiempo="desayuno"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="0"
+                            class="distribucion-input"
+                            data-grupo="${grupoId}"
+                            data-tiempo="colacionAM"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="0"
+                            class="distribucion-input"
+                            data-grupo="${grupoId}"
+                            data-tiempo="comida"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="0"
+                            class="distribucion-input"
+                            data-grupo="${grupoId}"
+                            data-tiempo="colacionPM"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="0"
+                            class="distribucion-input"
+                            data-grupo="${grupoId}"
+                            data-tiempo="cena"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td
+                        class="total-asignado pendiente"
+                        id="asignado-${grupoId}"
+                    >
+                        0/0
+                    </td>
+
+                `;
+
+                tbody.appendChild(fila);
+
+            });
+
+            revisarDistribucion();
 
         }
 
 
-        /* COPIAR ENLACE */
+        /* ---------------------------------------------------------
+           LEER NÚMERO
+        --------------------------------------------------------- */
 
-        function copiarEnlace() {
+        function numeroSeguro(valor) {
 
-            const campo = document.getElementById("enlaceGenerado");
+            const numero = parseFloat(valor);
 
-            navigator.clipboard.writeText(campo.value)
-                .then(function() {
+            if (isNaN(numero) || numero < 0) {
+                return 0;
+            }
 
-                    const mensaje = document.getElementById("mensajeCopia");
+            return numero;
 
-                    mensaje.style.display = "block";
+        }
 
-                    setTimeout(function() {
-                        mensaje.style.display = "none";
-                    }, 2500);
 
-                })
-                .catch(function() {
+        /* ---------------------------------------------------------
+           REVISAR DISTRIBUCIÓN
+        --------------------------------------------------------- */
 
-                    campo.select();
-                    document.execCommand("copy");
+        function revisarDistribucion() {
 
-                    const mensaje = document.getElementById("mensajeCopia");
+            const grupos = obtenerGruposSeleccionados();
 
-                    mensaje.style.display = "block";
+            const aviso = document.getElementById("avisoDistribucion");
 
-                    setTimeout(function() {
-                        mensaje.style.display = "none";
-                    }, 2500);
+            if (grupos.length === 0) {
+
+                aviso.className = "aviso-distribucion";
+                aviso.textContent =
+                    "Selecciona los grupos y coloca los equivalentes diarios.";
+
+                return false;
+
+            }
+
+            let todoCorrecto = true;
+            let hayTotalesSinColocar = false;
+
+            grupos.forEach(function(grupoId) {
+
+                const totalInput =
+                    document.querySelector(
+                        `.total-dia[data-grupo="${grupoId}"]`
+                    );
+
+                const totalDia = numeroSeguro(totalInput.value);
+
+                if (totalInput.value === "") {
+                    hayTotalesSinColocar = true;
+                    todoCorrecto = false;
+                }
+
+                const inputs =
+                    document.querySelectorAll(
+                        `.distribucion-input[data-grupo="${grupoId}"]`
+                    );
+
+                let suma = 0;
+
+                inputs.forEach(function(input) {
+                    suma += numeroSeguro(input.value);
+                });
+
+                const indicador =
+                    document.getElementById(`asignado-${grupoId}`);
+
+                indicador.textContent =
+                    `${suma}/${totalDia}`;
+
+                indicador.classList.remove(
+                    "correcto",
+                    "incorrecto",
+                    "pendiente"
+                );
+
+                if (totalInput.value === "") {
+
+                    indicador.classList.add("pendiente");
+
+                } else if (Math.abs(suma - totalDia) < 0.001) {
+
+                    indicador.classList.add("correcto");
+
+                } else {
+
+                    indicador.classList.add("incorrecto");
+                    todoCorrecto = false;
+
+                }
+
+            });
+
+
+            if (hayTotalesSinColocar) {
+
+                aviso.className = "aviso-distribucion";
+                aviso.textContent =
+                    "⚠️ Coloca el total de equivalentes por día para cada grupo.";
+
+            } else if (todoCorrecto) {
+
+                aviso.className =
+                    "aviso-distribucion exito-distribucion";
+
+                aviso.textContent =
+                    "✓ Todos los equivalentes están correctamente distribuidos.";
+
+            } else {
+
+                aviso.className =
+                    "aviso-distribucion error-distribucion";
+
+                aviso.textContent =
+                    "⚠️ Revisa la distribución. El total asignado debe coincidir con el total del día.";
+
+            }
+
+            return todoCorrecto;
+
+        }
+
+
+        /* ---------------------------------------------------------
+           OBTENER DATOS DE DISTRIBUCIÓN
+        --------------------------------------------------------- */
+
+        function obtenerDistribucion() {
+
+            const grupos = obtenerGruposSeleccionados();
+
+            const distribucion = {};
+
+            grupos.forEach(function(grupoId) {
+
+                const totalInput =
+                    document.querySelector(
+                        `.total-dia[data-grupo="${grupoId}"]`
+                    );
+
+                distribucion[grupoId] = {
+
+                    nombre: nombresGrupos[grupoId],
+
+                    total: numeroSeguro(totalInput.value),
+
+                    desayuno: 0,
+                    colacionAM: 0,
+                    comida: 0,
+                    colacionPM: 0,
+                    cena: 0
+
+                };
+
+                const inputs =
+                    document.querySelectorAll(
+                        `.distribucion-input[data-grupo="${grupoId}"]`
+                    );
+
+                inputs.forEach(function(input) {
+
+                    const tiempo = input.dataset.tiempo;
+
+                    distribucion[grupoId][tiempo] =
+                        numeroSeguro(input.value);
 
                 });
 
+            });
+
+            return distribucion;
+
         }
 
 
-        /* ABRIR ENLACE PERSONALIZADO */
+        /* ---------------------------------------------------------
+           GENERAR ENLACE
+        --------------------------------------------------------- */
 
-        function cargarEnlacePersonalizado() {
+        function generarEnlace() {
 
-            const parametros = new URLSearchParams(window.location.search);
+            const grupos = obtenerGruposSeleccionados();
 
-            const grupos = parametros.get("grupos");
+            if (grupos.length === 0) {
+
+                alert(
+                    "Primero selecciona al menos un grupo de alimentos."
+                );
+
+                return;
+
+            }
+
+            if (!revisarDistribucion()) {
+
+                alert(
+                    "Revisa la distribución de equivalentes antes de generar el enlace."
+                );
+
+                return;
+
+            }
+
+            const distribucion = obtenerDistribucion();
+
+            const url = new URL(
+                window.location.href
+            );
+
+            url.search = "";
+
+            url.searchParams.set(
+                "grupos",
+                grupos.join(",")
+            );
+
+            url.searchParams.set(
+                "dist",
+                JSON.stringify(distribucion)
+            );
+
+            const enlace = url.toString();
+
+            document.getElementById(
+                "enlaceGenerado"
+            ).value = enlace;
+
+            document.getElementById(
+                "resultadoEnlace"
+            ).style.display = "block";
+
+        }
 
 
-            /* SI NO HAY GRUPOS EN EL ENLACE */
+        /* ---------------------------------------------------------
+           COPIAR ENLACE
+        --------------------------------------------------------- */
 
-            if (!grupos) {
+        function copiarEnlace() {
 
-                document.getElementById("panelSeleccion").style.display = "block";
+            const campo =
+                document.getElementById("enlaceGenerado");
 
+            const texto = campo.value;
+
+            if (!texto) {
                 return;
             }
 
+            if (
+                navigator.clipboard &&
+                window.isSecureContext
+            ) {
 
-            /* SI HAY GRUPOS SELECCIONADOS */
+                navigator.clipboard.writeText(texto)
+                    .then(function() {
 
-            const gruposSeleccionados = grupos.split(",");
+                        mostrarMensajeCopia();
 
+                    })
+                    .catch(function() {
 
-            /* OCULTAR PANEL DE SELECCIÓN */
+                        copiarMetodoAlternativo(campo);
 
-            document.getElementById("panelSeleccion").style.display = "none";
+                    });
 
-            document.getElementById("textoPrincipal").style.display = "none";
+            } else {
 
-            document.getElementById("mensajePaciente").style.display = "block";
+                copiarMetodoAlternativo(campo);
 
-
-            /* MOSTRAR SOLAMENTE LOS GRUPOS SELECCIONADOS */
-
-            for (const checkId in relaciones) {
-
-                const nombreGrupo = checkId.replace("check", "");
-
-                const grupo = document.getElementById(relaciones[checkId]);
-
-                if (grupo) {
-
-                    if (gruposSeleccionados.includes(nombreGrupo)) {
-
-                        grupo.style.display = "block";
-
-                    } else {
-
-                        grupo.style.display = "none";
-
-                    }
-
-                }
             }
 
         }
 
 
-        /* INICIAR PÁGINA */
+        function copiarMetodoAlternativo(campo) {
 
-        document.addEventListener("DOMContentLoaded", function() {
+            campo.select();
+            campo.setSelectionRange(
+                0,
+                99999
+            );
+
+            try {
+
+                document.execCommand("copy");
+                mostrarMensajeCopia();
+
+            } catch (error) {
+
+                alert(
+                    "No se pudo copiar automáticamente. Selecciona y copia el enlace manualmente."
+                );
+
+            }
+
+        }
 
 
-            /* Activar casillas */
+        function mostrarMensajeCopia() {
 
-            for (const checkId in relaciones) {
+            const mensaje =
+                document.getElementById("mensajeCopia");
 
-                const checkbox = document.getElementById(checkId);
+            mensaje.style.display = "block";
 
-                if (checkbox) {
+            setTimeout(function() {
 
-                    checkbox.addEventListener(
-                        "change",
-                        actualizarGrupos
+                mensaje.style.display = "none";
+
+            }, 2500);
+
+        }
+
+
+        /* ---------------------------------------------------------
+           MOSTRAR DISTRIBUCIÓN AL PACIENTE
+        --------------------------------------------------------- */
+
+        function mostrarDistribucionPaciente(distribucion) {
+
+            const tiempos = {
+
+                desayuno: "pacienteDesayuno",
+                colacionAM: "pacienteColacionAM",
+                comida: "pacienteComida",
+                colacionPM: "pacienteColacionPM",
+                cena: "pacienteCena"
+
+            };
+
+            const nombresTiempos = {
+
+                desayuno: "Desayuno",
+                colacionAM: "Colación AM",
+                comida: "Comida",
+                colacionPM: "Colación PM",
+                cena: "Cena"
+
+            };
+
+
+            Object.keys(tiempos).forEach(function(tiempo) {
+
+                const contenedor =
+                    document.getElementById(
+                        tiempos[tiempo]
+                    );
+
+                const lista =
+                    contenedor.querySelector(
+                        ".lista-tiempo"
+                    );
+
+                lista.innerHTML = "";
+
+                let hayEquivalentes = false;
+
+
+                Object.keys(distribucion).forEach(function(grupoId) {
+
+                    const datos =
+                        distribucion[grupoId];
+
+                    const cantidad =
+                        numeroSeguro(
+                            datos[tiempo]
+                        );
+
+                    if (cantidad > 0) {
+
+                        hayEquivalentes = true;
+
+                        const elemento =
+                            document.createElement("div");
+
+                        elemento.className =
+                            "equivalente-paciente";
+
+                        elemento.innerHTML = `
+
+                            <span>
+                                ${datos.nombre}
+                            </span>
+
+                            <span class="cantidad-equivalente">
+                                ${cantidad} equivalente${cantidad === 1 ? "" : "s"}
+                            </span>
+
+                        `;
+
+                        lista.appendChild(elemento);
+
+                    }
+
+                });
+
+
+                if (!hayEquivalentes) {
+
+                    contenedor.style.display = "none";
+
+                } else {
+
+                    contenedor.style.display = "block";
+
+                }
+
+            });
+
+
+            document.getElementById(
+                "distribucionPaciente"
+            ).style.display = "block";
+
+        }
+
+
+        /* ---------------------------------------------------------
+           CARGAR ENLACE PERSONALIZADO
+        --------------------------------------------------------- */
+
+        function cargarEnlacePersonalizado() {
+
+            const parametros =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+            const gruposParametro =
+                parametros.get("grupos");
+
+            const distribucionParametro =
+                parametros.get("dist");
+
+
+            if (!gruposParametro) {
+
+                return;
+
+            }
+
+
+            /* OCULTAR VISTA PROFESIONAL */
+
+            document.getElementById(
+                "panelSeleccion"
+            ).style.display = "none";
+
+            document.getElementById(
+                "panelDistribucion"
+            ).style.display = "none";
+
+            document.getElementById(
+                "panelGenerar"
+            ).style.display = "none";
+
+            document.getElementById(
+                "textoPrincipal"
+            ).style.display = "none";
+
+
+            /* MOSTRAR MENSAJE DE PACIENTE */
+
+            document.getElementById(
+                "mensajePaciente"
+            ).style.display = "block";
+
+
+            /* OCULTAR TODOS LOS GRUPOS */
+
+            Object.values(relaciones).forEach(function(grupoId) {
+
+                const grupo =
+                    document.getElementById(grupoId);
+
+                grupo.style.display = "none";
+
+            });
+
+
+            /* MOSTRAR SOLO LOS GRUPOS SELECCIONADOS */
+
+            const grupos =
+                gruposParametro.split(",");
+
+
+            grupos.forEach(function(grupoId) {
+
+                const grupo =
+                    document.getElementById(grupoId);
+
+                if (grupo) {
+
+                    grupo.style.display = "block";
+
+                }
+
+            });
+
+
+            /* CARGAR DISTRIBUCIÓN */
+
+            if (distribucionParametro) {
+
+                try {
+
+                    const distribucion =
+                        JSON.parse(
+                            distribucionParametro
+                        );
+
+                    mostrarDistribucionPaciente(
+                        distribucion
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "No se pudo leer la distribución.",
+                        error
                     );
 
                 }
 
             }
 
-
-            /* Ocultar todos los grupos inicialmente */
-
-            actualizarGrupos();
+        }
 
 
-            /* Revisar si es un enlace personalizado */
+        /* ---------------------------------------------------------
+           INICIAR PÁGINA
+        --------------------------------------------------------- */
 
-            cargarEnlacePersonalizado();
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
 
-        });
+                /* Ocultar todos los grupos inicialmente */
+
+                Object.values(relaciones).forEach(function(grupoId) {
+
+                    const grupo =
+                        document.getElementById(grupoId);
+
+                    grupo.style.display = "none";
+
+                });
+
+
+                /* Activar los checkboxes */
+
+                Object.keys(relaciones).forEach(function(checkId) {
+
+                    const checkbox =
+                        document.getElementById(checkId);
+
+                    checkbox.addEventListener(
+                        "change",
+                        actualizarGrupos
+                    );
+
+                });
+
+
+                /* Revisar si es un enlace personalizado */
+
+                cargarEnlacePersonalizado();
+
+            }
+        );
 
     </script>
 
