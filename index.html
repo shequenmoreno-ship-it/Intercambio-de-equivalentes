@@ -1,1773 +1,1792 @@
-<!DOCTYPE html> 
-<html lang="es"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Intercambio de Equivalentes</title> 
- 
-    <style> 
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            padding: 20px; 
-            background: #f7f7f7; 
-            color: #333; 
-        } 
- 
-        h1 { 
-            text-align: center; 
-            color: #5b3a70; 
-        } 
- 
-        h2 { 
-            color: #5b3a70; 
-            margin-top: 0; 
-        } 
- 
-        .seleccion, 
-        .distribucion, 
-        .grupo { 
-            background: white; 
-            padding: 20px; 
-            border-radius: 12px; 
-            margin-bottom: 25px; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
-        } 
- 
-        .checkboxes { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-            gap: 10px; 
-        } 
- 
-        .checkboxes label { 
-            background: #f1eaf5; 
-            padding: 10px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-        } 
- 
-        .checkboxes label:hover { 
-            background: #e5d8ec; 
-        } 
- 
-        .boton { 
-            display: block; 
-            width: 100%; 
-            max-width: 400px; 
-            margin: 20px auto 10px; 
-            padding: 13px 20px; 
-            border: none; 
-            border-radius: 10px; 
-            background: #5b3a70; 
-            color: white; 
-            font-size: 16px; 
-            cursor: pointer; 
-        } 
- 
-        .boton:hover { 
-            background: #472d58; 
-        } 
- 
-        .boton-secundario { 
-            background: #80659a; 
-        } 
- 
-        .resultado-enlace { 
-            display: none; 
-            margin-top: 20px; 
-            padding: 15px; 
-            background: #f1eaf5; 
-            border-radius: 10px; 
-        } 
- 
-        .resultado-enlace p { 
-            margin-top: 0; 
-            font-weight: bold; 
-        } 
- 
-        #enlaceGenerado { 
-            width: 100%; 
-            box-sizing: border-box; 
-            padding: 10px; 
-            border: 1px solid #ccc; 
-            border-radius: 8px; 
-            margin-bottom: 10px; 
-        } 
- 
-        .grupo { 
-            display: none; 
-            overflow-x: auto; 
-        } 
- 
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            min-width: 400px; 
-        } 
- 
-        th { 
-            background: #5b3a70; 
-            color: white; 
-            padding: 10px; 
-            text-align: left; 
-        } 
- 
-        td { 
-            padding: 9px 10px; 
-            border-bottom: 1px solid #ddd; 
-        } 
- 
-        tr:nth-child(even) { 
-            background: #fafafa; 
-        } 
- 
-        .nota { 
-            text-align: center; 
-            color: #666; 
-            margin-bottom: 20px; 
-        } 
- 
-        .vista-paciente { 
-            text-align: center; 
-            color: #5b3a70; 
-            margin-bottom: 25px; 
-        } 
- 
-        .mensaje-copia { 
-            display: none; 
-            text-align: center; 
-            color: #4b7a4b; 
-            font-weight: bold; 
-            margin-top: 10px; 
-        } 
- 
-        /* DISTRIBUCIÓN */ 
- 
-        #panelDistribucion { 
-            display: none; 
-        } 
- 
-        .tabla-distribucion { 
-            min-width: 850px; 
-        } 
- 
-        .tabla-distribucion input { 
-            width: 65px; 
-            padding: 7px; 
-            border: 1px solid #ccc; 
-            border-radius: 6px; 
-            text-align: center; 
-            font-size: 15px; 
-        } 
- 
-        .tabla-distribucion input:focus { 
-            outline: none; 
-            border-color: #5b3a70; 
-        } 
- 
-        .total-asignado { 
-            font-weight: bold; 
-            text-align: center; 
-        } 
- 
-        .correcto { 
-            color: #39804a; 
-        } 
- 
-        .incorrecto { 
-            color: #c0392b; 
-        } 
- 
-        .pendiente { 
-            color: #777; 
-        } 
- 
-        .aviso-distribucion { 
-            padding: 12px; 
-            border-radius: 8px; 
-            margin-top: 15px; 
-            background: #f8f2fb; 
-            color: #5b3a70; 
-        } 
- 
-        .error-distribucion { 
-            background: #fdeeee; 
-            color: #a93226; 
-        } 
- 
-        .exito-distribucion { 
-            background: #edf8ef; 
-            color: #31743e; 
-        } 
- 
-        /* VISTA DE PACIENTE */ 
- 
-        #distribucionPaciente { 
-            display: none; 
-        } 
- 
-        .tiempo-comida { 
-            background: white; 
-            border-radius: 12px; 
-            padding: 18px; 
-            margin-bottom: 15px; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
-        } 
- 
-        .tiempo-comida h3 { 
-            color: #5b3a70; 
-            margin-top: 0; 
-            margin-bottom: 12px; 
-        } 
- 
-        .equivalente-paciente { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: #f7f2fa; 
-            padding: 10px 12px; 
-            border-radius: 8px; 
-            margin-bottom: 7px; 
-        } 
- 
-        .cantidad-equivalente { 
-            font-weight: bold; 
-            color: #5b3a70; 
-            white-space: nowrap; 
-        } 
- 
-        .explicacion-paciente { 
-            background: #f8f8f8; 
-            padding: 15px; 
-            border-radius: 10px; 
-            margin-bottom: 20px; 
-            color: #555; 
-            line-height: 1.5; 
-        } 
- 
-        .boton-tabla { 
-            background: #80659a; 
-            margin: 10px 0 20px; 
-        } 
- 
-        @media (max-width: 600px) { 
- 
-            body { 
-                padding: 12px; 
-            } 
- 
-            .seleccion, 
-            .distribucion, 
-            .grupo { 
-                padding: 15px; 
-            } 
- 
-            h1 { 
-                font-size: 25px; 
-            } 
- 
-            .equivalente-paciente { 
-                flex-direction: column; 
-                align-items: flex-start; 
-                gap: 4px; 
-            } 
-        } 
-    </style> 
-</head> 
- 
-<body> 
- 
-    <h1>Intercambio de Equivalentes</h1> 
- 
-    <p class="nota" id="textoPrincipal"> 
-        Selecciona los grupos de alimentos que deseas utilizar para tu paciente. 
-    </p> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- PANEL PARA LA NUTRIÓLOGA --> 
-    <!-- ========================================================= --> 
- 
-    <div class="seleccion" id="panelSeleccion"> 
- 
-        <h2>Selecciona los grupos para tu paciente</h2> 
- 
-        <div class="checkboxes"> 
- 
-            <label> 
-                <input type="checkbox" id="checkVerduras"> 
-                Verduras 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkFrutas"> 
-                Frutas 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkCerealesSinGrasa"> 
-                Cereales sin grasa 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkCerealesConGrasa"> 
-                Cereales con grasa 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkLeguminosas"> 
-                Leguminosas 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkAOAMuyBajo"> 
-                AOA - Muy bajo aporte de grasa 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkAOABajo"> 
-                AOA - Bajo aporte de grasa 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkAOAModerado"> 
-                AOA - Moderado aporte de grasa 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkAOAAlto"> 
-                AOA - Alto aporte de grasa 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkLecheSemidescremada"> 
-                Leche semidescremada 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkAceitesSinProteina"> 
-                Aceites y grasas - Sin proteína 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkAceitesConProteina"> 
-                Aceites y grasas - Con proteína 
-            </label> 
- 
-            <label> 
-                <input type="checkbox" id="checkAzucaresSinGrasa"> 
-                Azúcares - Sin grasa 
-            </label> 
- 
-        </div> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- PANEL DE DISTRIBUCIÓN --> 
-    <!-- ========================================================= --> 
- 
-    <div class="distribucion" id="panelDistribucion"> 
- 
-        <h2>Distribución de equivalentes</h2> 
- 
-        <p> 
-            Indica cuántos equivalentes necesita tu paciente de cada grupo al día 
-            y distribúyelos entre los diferentes tiempos de comida. 
-        </p> 
- 
-        <div style="overflow-x:auto;"> 
- 
-            <table class="tabla-distribucion"> 
- 
-                <thead> 
-                    <tr> 
-                        <th>Grupo</th> 
-                        <th>Total/día</th> 
-                        <th>Desayuno</th> 
-                        <th>Col. AM</th> 
-                        <th>Comida</th> 
-                        <th>Col. PM</th> 
-                        <th>Cena</th> 
-                        <th>Asignado</th> 
-                    </tr> 
-                </thead> 
- 
-                <tbody id="tablaDistribucionBody"></tbody> 
- 
-            </table> 
- 
-        </div> 
- 
-        <div class="aviso-distribucion" id="avisoDistribucion"> 
-            Selecciona los grupos y coloca los equivalentes diarios. 
-        </div> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- BOTÓN PARA GENERAR ENLACE --> 
-    <!-- ========================================================= --> 
- 
-    <div class="seleccion" id="panelGenerar"> 
- 
-        <button class="boton" onclick="generarEnlace()"> 
-            🔗 Generar enlace para paciente 
-        </button> 
- 
-        <div class="resultado-enlace" id="resultadoEnlace"> 
- 
-            <p>Este es el enlace personalizado:</p> 
- 
-            <input 
-                type="text" 
-                id="enlaceGenerado" 
-                readonly 
-            > 
- 
-            <button class="boton" onclick="copiarEnlace()"> 
-                📋 Copiar enlace 
-            </button> 
- 
-            <div class="mensaje-copia" id="mensajeCopia"> 
-                ✓ Enlace copiado 
-            </div> 
- 
-        </div> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- VISTA DEL PACIENTE --> 
-    <!-- ========================================================= --> 
- 
-    <div 
-        class="vista-paciente" 
-        id="mensajePaciente" 
-        style="display:none;" 
-    > 
- 
-        <h2>🌸 Mi distribución de equivalentes</h2> 
- 
-        <div class="explicacion-paciente"> 
- 
-            <p> 
-                Los equivalentes que aparecen aquí corresponden a la distribución 
-                indicada por tu nutrióloga. 
-            </p> 
- 
-            <p> 
-                No necesitas consumir todos los alimentos de una lista. 
-                Puedes elegir las opciones que prefieras para completar 
-                los equivalentes indicados. 
-            </p> 
- 
-        </div> 
- 
-    </div> 
- 
- 
-    <!-- DISTRIBUCIÓN PARA PACIENTE --> 
- 
-    <div id="distribucionPaciente"> 
- 
-        <div class="tiempo-comida" id="pacienteDesayuno"> 
-            <h3>🌅 Desayuno</h3> 
-            <div class="lista-tiempo"></div> 
-        </div> 
- 
-        <div class="tiempo-comida" id="pacienteColacionAM"> 
-            <h3>☕ Colación AM</h3> 
-            <div class="lista-tiempo"></div> 
-        </div> 
- 
-        <div class="tiempo-comida" id="pacienteComida"> 
-            <h3>🍽️ Comida</h3> 
-            <div class="lista-tiempo"></div> 
-        </div> 
- 
-        <div class="tiempo-comida" id="pacienteColacionPM"> 
-            <h3>☕ Colación PM</h3> 
-            <div class="lista-tiempo"></div> 
-        </div> 
- 
-        <div class="tiempo-comida" id="pacienteCena"> 
-            <h3>🌙 Cena</h3> 
-            <div class="lista-tiempo"></div> 
-        </div> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- VERDURAS --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoVerduras"> 
- 
-        <h2>Verduras</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Acelga</td><td>1/2 taza</td></tr> 
-            <tr><td>Brócoli</td><td>1/2 taza</td></tr> 
-            <tr><td>Calabacita alargada</td><td>1 pieza</td></tr> 
-            <tr><td>Champiñón</td><td>1/2 taza</td></tr> 
-            <tr><td>Chayote</td><td>1 taza</td></tr> 
-            <tr><td>Chícharo</td><td>1/4 taza</td></tr> 
-            <tr><td>Espinaca cruda</td><td>2 tazas</td></tr> 
-            <tr><td>Jitomate</td><td>1 pieza</td></tr> 
-            <tr><td>Zanahoria cruda</td><td>1/2 taza</td></tr> 
-            <tr><td>Cebolla</td><td>1/2 taza</td></tr> 
-            <tr><td>Pimiento fresco</td><td>1 taza</td></tr> 
-            <tr><td>Lechuga</td><td>2 tazas</td></tr> 
-            <tr><td>Apio</td><td>1 taza</td></tr> 
-            <tr><td>Betabel</td><td>1/4 pieza</td></tr> 
-            <tr><td>Coliflor</td><td>1 taza</td></tr> 
-            <tr><td>Ejotes</td><td>1/2 taza</td></tr> 
-            <tr><td>Jícama</td><td>1/2 taza</td></tr> 
-            <tr><td>Nopal</td><td>1 taza</td></tr> 
-            <tr><td>Pepino</td><td>1 taza</td></tr> 
-            <tr><td>Rábano</td><td>1 taza</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- FRUTAS --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoFrutas"> 
- 
-        <h2>Frutas</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Blueberries</td><td>3/4 taza</td></tr> 
-            <tr><td>Frambuesa</td><td>1 taza</td></tr> 
-            <tr><td>Zarzamora</td><td>1 taza</td></tr> 
-            <tr><td>Fresa entera</td><td>17 piezas medianas</td></tr> 
-            <tr><td>Uva</td><td>18 piezas</td></tr> 
-            <tr><td>Plátano</td><td>1/2 pieza</td></tr> 
-            <tr><td>Fresa congelada</td><td>1/2 taza</td></tr> 
-            <tr><td>Mango manila</td><td>1 pieza</td></tr> 
-            <tr><td>Mango petacón</td><td>1/2 pieza</td></tr> 
-            <tr><td>Manzana</td><td>1 pieza</td></tr> 
-            <tr><td>Melón</td><td>1 taza</td></tr> 
-            <tr><td>Pera</td><td>1/2 pieza</td></tr> 
-            <tr><td>Sandía</td><td>1 taza</td></tr> 
-            <tr><td>Duraznos</td><td>2 piezas</td></tr> 
-            <tr><td>Mandarina</td><td>1 taza</td></tr> 
-            <tr><td>Piña</td><td>3/4 taza</td></tr> 
-            <tr><td>Zapote</td><td>1/4 taza</td></tr> 
-            <tr><td>Papaya</td><td>1 taza</td></tr> 
-            <tr><td>Guanábana</td><td>1 pieza chica</td></tr> 
-            <tr><td>Naranja</td><td>4 piezas</td></tr> 
-            <tr><td>Tuna</td><td>2 piezas</td></tr> 
-            <tr><td>Toronja</td><td>1 pieza</td></tr> 
-            <tr><td>Maracuyá</td><td>3 piezas</td></tr> 
-            <tr><td>Lima</td><td>3 piezas</td></tr> 
-            <tr><td>Kiwi</td><td>1 1/2 pieza</td></tr> 
-            <tr><td>Guayaba</td><td>3 piezas</td></tr> 
-            <tr><td>Cereza</td><td>20 piezas</td></tr> 
-            <tr><td>Agua de coco</td><td>1 1/2 taza</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- CEREALES SIN GRASA --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoCerealesSinGrasa"> 
- 
-        <h2>Cereales sin grasa</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Arroz integral</td><td>1/3 taza</td></tr> 
-            <tr><td>Arroz cocido</td><td>1/4 taza</td></tr> 
-            <tr><td>Avena integral</td><td>1/3 taza</td></tr> 
-            <tr><td>Bolillo</td><td>1/3 pieza</td></tr> 
-            <tr><td>Avena Quaker 3 min</td><td>1/2 taza</td></tr> 
-            <tr><td>Camote cocido</td><td>1/3 taza</td></tr> 
-            <tr><td>Elote desgranado</td><td>1/2 taza</td></tr> 
-            <tr><td>Pinole</td><td>15 g</td></tr> 
-            <tr><td>Palomitas naturales</td><td>2 1/2 taza</td></tr> 
-            <tr><td>Macarrón cocido</td><td>1/3 taza</td></tr> 
-            <tr><td>Galleta María</td><td>5 piezas</td></tr> 
-            <tr><td>Galletas Salmas</td><td>3 piezas</td></tr> 
-            <tr><td>Pan blanco o tostado</td><td>1 rebanada</td></tr> 
-            <tr><td>Papa</td><td>1/2 pieza</td></tr> 
-            <tr><td>Pasta cocida</td><td>1/2 taza</td></tr> 
-            <tr><td>Saladitas</td><td>5 piezas</td></tr> 
-            <tr><td>Tortilla</td><td>1 pieza</td></tr> 
-            <tr><td>Yuca</td><td>1/4 pieza</td></tr> 
-            <tr><td>Pan pita</td><td>1/3 pieza</td></tr> 
-            <tr><td>Pan de caja</td><td>1 rebanada</td></tr> 
-            <tr><td>Maicena</td><td>2 cdas</td></tr> 
-            <tr><td>Hojuelas de maíz</td><td>3/4 taza</td></tr> 
-            <tr><td>Croutones</td><td>1/2 taza</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- CEREALES CON GRASA --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoCerealesConGrasa"> 
- 
-        <h2>Cereales con grasa</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Barrita de granola</td><td>2 cdas</td></tr> 
-            <tr><td>Croissant</td><td>1/2 pieza</td></tr> 
-            <tr><td>Croutones</td><td>3/4 taza</td></tr> 
-            <tr><td>Galleta de avena</td><td>2 piezas</td></tr> 
-            <tr><td>Pan de ajo</td><td>1 pieza</td></tr> 
-            <tr><td>Pay de queso</td><td>1 rebanada</td></tr> 
-            <tr><td>Puré de papa</td><td>1/2 taza</td></tr> 
-            <tr><td>Tostada</td><td>1 1/2 pieza</td></tr> 
-            <tr><td>Waffle</td><td>1 pieza</td></tr> 
-            <tr><td>Wrap</td><td>1/2 pieza</td></tr> 
-            <tr><td>Churros</td><td>1/2 pieza</td></tr> 
-            <tr><td>Bisquet</td><td>1/2 pieza</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- LEGUMINOSAS --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoLeguminosas"> 
- 
-        <h2>Leguminosas</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Alubia cocida</td><td>1/2 taza</td></tr> 
-            <tr><td>Frijol molido</td><td>1/3 taza</td></tr> 
-            <tr><td>Garbanzo</td><td>1/2 taza</td></tr> 
-            <tr><td>Lenteja cocida</td><td>1/2 taza</td></tr> 
-            <tr><td>Hummus</td><td>5 cucharadas</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- AOA MUY BAJO --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoAOAMuyBajo"> 
- 
-        <h2>AOA - Muy bajo aporte de grasa</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Pechuga de pollo sin piel</td><td>30 g</td></tr> 
-            <tr><td>Filete de pescado</td><td>40 g</td></tr> 
-            <tr><td>Atún en agua</td><td>1/3 lata</td></tr> 
-            <tr><td>Camarón cocido</td><td>5 piezas</td></tr> 
-            <tr><td>Bistec</td><td>30 g</td></tr> 
-            <tr><td>Filete de res</td><td>30 g</td></tr> 
-            <tr><td>Cecina</td><td>25 g</td></tr> 
-            <tr><td>Clara de huevo</td><td>2 piezas</td></tr> 
-            <tr><td>Atún fresco</td><td>30 g</td></tr> 
-            <tr><td>Camarón gigante</td><td>2 piezas</td></tr> 
-            <tr><td>Chambarete de res</td><td>35 g</td></tr> 
-            <tr><td>Chuleta ahumada</td><td>1/2 Pz</td></tr> 
-            <tr><td>Cuete de res</td><td>45 g</td></tr> 
-            <tr><td>Filete de atún</td><td>30 g</td></tr> 
-            <tr><td>Milanesa de pollo</td><td>30 g</td></tr> 
-            <tr><td>Pescado fileteado</td><td>40 g</td></tr> 
-            <tr><td>Aguayón</td><td>30 g</td></tr> 
-            <tr><td>Carne molida de pollo</td><td>30 g</td></tr> 
-            <tr><td>Clara de huevo en polvo</td><td>1 1/2 cucharada</td></tr> 
-            <tr><td>Falda de res</td><td>35 g</td></tr> 
-            <tr><td>Maciza de res</td><td>25 g</td></tr> 
-            <tr><td>Queso cottage</td><td>50 g</td></tr> 
-            <tr><td>Queso mozzarella</td><td>1 rebanada</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- AOA BAJO --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoAOABajo"> 
- 
-        <h2>AOA - Bajo aporte de grasa</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Arrachera de res</td><td>30 g</td></tr> 
-            <tr><td>Atún ahumado</td><td>30 g</td></tr> 
-            <tr><td>Atún blanco en aceite</td><td>30 g</td></tr> 
-            <tr><td>Atún en aceite drenado</td><td>1/3 lata</td></tr> 
-            <tr><td>Barbacoa</td><td>50 g</td></tr> 
-            <tr><td>Bistec</td><td>35 g</td></tr> 
-            <tr><td>Carne de cerdo</td><td>40 g</td></tr> 
-            <tr><td>Carne de cerdo molida</td><td>40 g</td></tr> 
-            <tr><td>Carne de res</td><td>30 g</td></tr> 
-            <tr><td>Carne de ternera</td><td>35 g</td></tr> 
-            <tr><td>Carne molida de cerdo</td><td>40 g</td></tr> 
-            <tr><td>Chamorro</td><td>25 g</td></tr> 
-            <tr><td>Chuleta de cerdo</td><td>1/2 Pz</td></tr> 
-            <tr><td>Cuete de ternera</td><td>35 g</td></tr> 
-            <tr><td>Falda de cerdo</td><td>40 g</td></tr> 
-            <tr><td>Filete de cerdo</td><td>40 g</td></tr> 
-            <tr><td>Gallina</td><td>40 g</td></tr> 
-            <tr><td>Jamón de pavo</td><td>2 Rb</td></tr> 
-            <tr><td>Lomo de cerdo</td><td>40 g</td></tr> 
-            <tr><td>Milanesa de cerdo</td><td>40 g</td></tr> 
-            <tr><td>Molida de cerdo</td><td>40 g</td></tr> 
-            <tr><td>Molida de res</td><td>30 g</td></tr> 
-            <tr><td>Pechuga de pollo</td><td>35 g</td></tr> 
-            <tr><td>Pescado blanco</td><td>75 g</td></tr> 
-            <tr><td>Pescado fileteado</td><td>35 g</td></tr> 
-            <tr><td>Pierna de cerdo</td><td>40 g</td></tr> 
-            <tr><td>Queso cottage</td><td>3 cda</td></tr> 
-            <tr><td>Queso fresco</td><td>40 g</td></tr> 
-            <tr><td>Queso panela</td><td>40 g</td></tr> 
-            <tr><td>Queso ricotta bajo en grasa</td><td>3 cda</td></tr> 
-            <tr><td>Sirloin</td><td>25 g</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- AOA MODERADO --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoAOAModerado"> 
- 
-        <h2>AOA - Moderado aporte de grasa</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Huevo</td><td>1 pieza</td></tr> 
-            <tr><td>Bistec de bola</td><td>25 g</td></tr> 
-            <tr><td>Carne molida extra-magra</td><td>30 g</td></tr> 
-            <tr><td>Pecho de res</td><td>50 g</td></tr> 
-            <tr><td>Costillitas de cerdo</td><td>50 g</td></tr> 
-            <tr><td>Longaniza</td><td>45 g</td></tr> 
-            <tr><td>Pierna de pollo con piel cocida</td><td>1/3 pieza</td></tr> 
-            <tr><td>Muslo de pollo con piel cocida</td><td>1/3 pieza</td></tr> 
-            <tr><td>Salmón</td><td>30 g</td></tr> 
-            <tr><td>Sardina en tomate</td><td>1 pieza</td></tr> 
-            <tr><td>Sierra</td><td>50 g</td></tr> 
-            <tr><td>Queso blanco</td><td>35 g</td></tr> 
-            <tr><td>Queso mozzarella semidescremada</td><td>30 g</td></tr> 
-            <tr><td>Queso Ricotta semidescremada</td><td>55 g</td></tr> 
-            <tr><td>Requesón</td><td>3 1/2 cdas</td></tr> 
-            <tr><td>Salchicha de pavo</td><td>1 pieza</td></tr> 
-            <tr><td>Queso parmesano rallado</td><td>3 1/2 cdas</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- AOA ALTO --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoAOAAlto"> 
- 
-        <h2>AOA - Alto aporte de grasa</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Alitas de pollo</td><td>2 piezas</td></tr> 
-            <tr><td>Carne de res</td><td>40 g</td></tr> 
-            <tr><td>Carne molida</td><td>40 g</td></tr> 
-            <tr><td>Cecina de res</td><td>50 g</td></tr> 
-            <tr><td>Costilla de res</td><td>40 g</td></tr> 
-            <tr><td>Nugget de pollo</td><td>2 piezas</td></tr> 
-            <tr><td>Peperoni</td><td>10 rebanadas</td></tr> 
-            <tr><td>Queso amarillo</td><td>2 rebanadas</td></tr> 
-            <tr><td>Queso cheddar</td><td>3/4 rebanada</td></tr> 
-            <tr><td>Queso chihuahua</td><td>1 rebanada</td></tr> 
-            <tr><td>Queso manchego</td><td>25 g</td></tr> 
-            <tr><td>Salchicha</td><td>1/2 pieza</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- LECHE SEMIDESCREMADA --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoLecheSemidescremada"> 
- 
-        <h2>Leche semidescremada</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Leche semidescremada</td><td>1 taza</td></tr> 
-            <tr><td>Yogurth Oikos estilo griego natural sin azúcar</td><td>Envase de 150 gramos</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- ACEITES Y GRASAS SIN PROTEÍNA --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoAceitesSinProteina"> 
- 
-        <h2>Aceites y grasas - Sin proteína</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Aguacate Hass</td><td>1/3 pieza</td></tr> 
-            <tr><td>Aceituna</td><td>5 piezas</td></tr> 
-            <tr><td>Aderezo</td><td>1/2 cucharada</td></tr> 
-            <tr><td>Coco rallado</td><td>1 1/2 cucharada</td></tr> 
-            <tr><td>Crema ácida</td><td>2 cucharadas</td></tr> 
-            <tr><td>Guacamole</td><td>2 cucharadas</td></tr> 
-            <tr><td>Mantequilla</td><td>1 1/2 cucharadita</td></tr> 
-            <tr><td>Mayonesa</td><td>1 cucharadita</td></tr> 
-            <tr><td>Media crema</td><td>2 cucharaditas</td></tr> 
-            <tr><td>Tocino</td><td>1 rebanada</td></tr> 
-            <tr><td>Vinagreta</td><td>1/2 cucharada</td></tr> 
-            <tr><td>Queso Philadelphia</td><td>1 cucharada</td></tr> 
-            <tr><td>Queso crema</td><td>1 cucharada</td></tr> 
-            <tr><td>Aceituna negra sin hueso</td><td>5 piezas</td></tr> 
-            <tr><td>Aceite de oliva</td><td>1 cucharadita</td></tr> 
-            <tr><td>Aceite de palma</td><td>1 cucharadita</td></tr> 
-            <tr><td>Aceite de girasol</td><td>1 cucharadita</td></tr> 
-            <tr><td>Aceite de cacahuate</td><td>1 cucharadita</td></tr> 
-            <tr><td>Aderezo Ranch</td><td>1/2 cucharadita</td></tr> 
-            <tr><td>Aderezo César</td><td>1/2 cucharadita</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- ACEITES Y GRASAS CON PROTEÍNA --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoAceitesConProteina"> 
- 
-        <h2>Aceites y grasas - Con proteína</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Ajonjolí</td><td>4 cucharaditas</td></tr> 
-            <tr><td>Almendra</td><td>10 piezas</td></tr> 
-            <tr><td>Avellana</td><td>9 piezas</td></tr> 
-            <tr><td>Cacahuate</td><td>14 piezas</td></tr> 
-            <tr><td>Chía</td><td>7 cucharadas</td></tr> 
-            <tr><td>Chorizo</td><td>15 g</td></tr> 
-            <tr><td>Nuez entera</td><td>3 piezas</td></tr> 
-            <tr><td>Pepitas</td><td>60 piezas</td></tr> 
-            <tr><td>Crema de almendras</td><td>1 cucharada</td></tr> 
-            <tr><td>Pistache</td><td>18 piezas</td></tr> 
-            <tr><td>Semilla de girasol</td><td>4 cucharaditas</td></tr> 
-            <tr><td>Piñón</td><td>1 cucharada</td></tr> 
-            <tr><td>Castaña</td><td>1 1/2 pieza</td></tr> 
-            <tr><td>Vinagreta</td><td>1 1/2 cucharadita</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- AZÚCARES --> 
-    <!-- ========================================================= --> 
- 
-    <div class="grupo" id="grupoAzucaresSinGrasa"> 
- 
-        <h2>Azúcares - Sin grasa</h2> 
- 
-        <table> 
-            <tr> 
-                <th>Alimento</th> 
-                <th>1 Equivalente</th> 
-            </tr> 
- 
-            <tr><td>Azúcar de mesa</td><td>2 cucharaditas</td></tr> 
-            <tr><td>Miel</td><td>2 cucharaditas</td></tr> 
-            <tr><td>Panditas</td><td>1/3 bolsa</td></tr> 
-            <tr><td>Paleta helada de agua</td><td>1 pieza</td></tr> 
-            <tr><td>Salsa catsup</td><td>2 cucharadas</td></tr> 
-            <tr><td>Mermelada</td><td>2 1/2 cucharaditas</td></tr> 
-            <tr><td>Malvavisco</td><td>2 piezas</td></tr> 
-            <tr><td>Gomitas</td><td>4 piezas</td></tr> 
-            <tr><td>Gelatina</td><td>1/3 taza</td></tr> 
-        </table> 
- 
-    </div> 
- 
- 
-    <!-- ========================================================= --> 
-    <!-- JAVASCRIPT --> 
-    <!-- ========================================================= --> 
- 
-    <script> 
- 
-        /* --------------------------------------------------------- 
-           RELACIÓN ENTRE CHECKBOX Y GRUPO 
-        --------------------------------------------------------- */ 
- 
-        const relaciones = { 
- 
-            checkVerduras: "grupoVerduras", 
-            checkFrutas: "grupoFrutas", 
-            checkCerealesSinGrasa: "grupoCerealesSinGrasa", 
-            checkCerealesConGrasa: "grupoCerealesConGrasa", 
-            checkLeguminosas: "grupoLeguminosas", 
-            checkAOAMuyBajo: "grupoAOAMuyBajo", 
-            checkAOABajo: "grupoAOABajo", 
-            checkAOAModerado: "grupoAOAModerado", 
-            checkAOAAlto: "grupoAOAAlto", 
-            checkLecheSemidescremada: "grupoLecheSemidescremada", 
-            checkAceitesSinProteina: "grupoAceitesSinProteina", 
-            checkAceitesConProteina: "grupoAceitesConProteina", 
-            checkAzucaresSinGrasa: "grupoAzucaresSinGrasa" 
- 
-        }; 
- 
- 
-        /* --------------------------------------------------------- 
-           NOMBRES DE LOS GRUPOS 
-        --------------------------------------------------------- */ 
- 
-        const nombresGrupos = { 
- 
-            grupoVerduras: "Verduras", 
-            grupoFrutas: "Frutas", 
-            grupoCerealesSinGrasa: "Cereales sin grasa", 
-            grupoCerealesConGrasa: "Cereales con grasa", 
-            grupoLeguminosas: "Leguminosas", 
-            grupoAOAMuyBajo: "AOA - Muy bajo aporte de grasa", 
-            grupoAOABajo: "AOA - Bajo aporte de grasa", 
-            grupoAOAModerado: "AOA - Moderado aporte de grasa", 
-            grupoAOAAlto: "AOA - Alto aporte de grasa", 
-            grupoLecheSemidescremada: "Leche semidescremada", 
-            grupoAceitesSinProteina: "Aceites y grasas - Sin proteína", 
-            grupoAceitesConProteina: "Aceites y grasas - Con proteína", 
-            grupoAzucaresSinGrasa: "Azúcares - Sin grasa" 
- 
-        }; 
- 
- 
-        /* --------------------------------------------------------- 
-           ACTUALIZAR GRUPOS VISIBLES 
-        --------------------------------------------------------- */ 
- 
-        function actualizarGrupos() { 
- 
-            Object.keys(relaciones).forEach(function(checkId) { 
- 
-                const checkbox = document.getElementById(checkId); 
-                const grupoId = relaciones[checkId]; 
-                const grupo = document.getElementById(grupoId); 
- 
-                if (checkbox.checked) { 
-                    grupo.style.display = "block"; 
-                } else { 
-                    grupo.style.display = "none"; 
-                } 
- 
-            }); 
- 
-            actualizarTablaDistribucion(); 
-        } 
- 
- 
-        /* --------------------------------------------------------- 
-           OBTENER GRUPOS SELECCIONADOS 
-        --------------------------------------------------------- */ 
- 
-        function obtenerGruposSeleccionados() { 
- 
-            const seleccionados = []; 
- 
-            Object.keys(relaciones).forEach(function(checkId) { 
- 
-                const checkbox = document.getElementById(checkId); 
- 
-                if (checkbox.checked) { 
-                    seleccionados.push(relaciones[checkId]); 
-                } 
- 
-            }); 
- 
-            return seleccionados; 
- 
-        } 
- 
- 
-        /* --------------------------------------------------------- 
-           CREAR TABLA DE DISTRIBUCIÓN 
-        --------------------------------------------------------- */ 
- 
-        function actualizarTablaDistribucion() { 
- 
-            const grupos = obtenerGruposSeleccionados(); 
- 
-            const panel = document.getElementById("panelDistribucion"); 
-            const tbody = document.getElementById("tablaDistribucionBody"); 
- 
-            tbody.innerHTML = ""; 
- 
-            if (grupos.length === 0) { 
- 
-                panel.style.display = "none"; 
-                revisarDistribucion(); 
-                return; 
- 
-            } 
- 
-            panel.style.display = "block"; 
- 
-            grupos.forEach(function(grupoId) { 
- 
-                const fila = document.createElement("tr"); 
- 
-                fila.innerHTML = ` 
- 
-                    <td> 
-                        <strong>${nombresGrupos[grupoId]}</strong> 
-                    </td> 
- 
-                    <td> 
-                        <input 
-                            type="number" 
-                            min="0" 
-                            step="0.5" 
-                            value="" 
-                            placeholder="0" 
-                            class="total-dia" 
-                            data-grupo="${grupoId}" 
-                            onchange="revisarDistribucion()" 
-                        > 
-                    </td> 
- 
-                    <td> 
-                        <input 
-                            type="number" 
-                            min="0" 
-                            step="0.5" 
-                            value="0" 
-                            class="distribucion-input" 
-                            data-grupo="${grupoId}" 
-                            data-tiempo="desayuno" 
-                            onchange="revisarDistribucion()" 
-                        > 
-                    </td> 
- 
-                    <td> 
-                        <input 
-                            type="number" 
-                            min="0" 
-                            step="0.5" 
-                            value="0" 
-                            class="distribucion-input" 
-                            data-grupo="${grupoId}" 
-                            data-tiempo="colacionAM" 
-                            onchange="revisarDistribucion()" 
-                        > 
-                    </td> 
- 
-                    <td> 
-                        <input 
-                            type="number" 
-                            min="0" 
-                            step="0.5" 
-                            value="0" 
-                            class="distribucion-input" 
-                            data-grupo="${grupoId}" 
-                            data-tiempo="comida" 
-                            onchange="revisarDistribucion()" 
-                        > 
-                    </td> 
- 
-                    <td> 
-                        <input 
-                            type="number" 
-                            min="0" 
-                            step="0.5" 
-                            value="0" 
-                            class="distribucion-input" 
-                            data-grupo="${grupoId}" 
-                            data-tiempo="colacionPM" 
-                            onchange="revisarDistribucion()" 
-                        > 
-                    </td> 
- 
-                    <td> 
-                        <input 
-                            type="number" 
-                            min="0" 
-                            step="0.5" 
-                            value="0" 
-                            class="distribucion-input" 
-                            data-grupo="${grupoId}" 
-                            data-tiempo="cena" 
-                            onchange="revisarDistribucion()" 
-                        > 
-                    </td> 
- 
-                    <td 
-                        class="total-asignado pendiente" 
-                        id="asignado-${grupoId}" 
-                    > 
-                        0/0 
-                    </td> 
- 
-                `; 
- 
-                tbody.appendChild(fila); 
- 
-            }); 
- 
-            revisarDistribucion(); 
- 
-        } 
- 
- 
-        /* --------------------------------------------------------- 
-           LEER NÚMERO 
-        --------------------------------------------------------- */ 
- 
-        function numeroSeguro(valor) { 
- 
-            const numero = parseFloat(valor); 
- 
-            if (isNaN(numero) || numero < 0) { 
-                return 0; 
-            } 
- 
-            return numero; 
- 
-        } 
- 
- 
-        /* --------------------------------------------------------- 
-           REVISAR DISTRIBUCIÓN 
-        --------------------------------------------------------- */ 
- 
-        function revisarDistribucion() { 
- 
-            const grupos = obtenerGruposSeleccionados(); 
- 
-            const aviso = document.getElementById("avisoDistribucion"); 
- 
-            if (grupos.length === 0) { 
- 
-                aviso.className = "aviso-distribucion"; 
-                aviso.textContent = 
-                    "Selecciona los grupos y coloca los equivalentes diarios."; 
- 
-                return false; 
- 
-            } 
- 
-            let todoCorrecto = true; 
-            let hayTotalesSinColocar = false; 
- 
-            grupos.forEach(function(grupoId) { 
- 
-                const totalInput = 
-                    document.querySelector( 
-                        `.total-dia[data-grupo="${grupoId}"]` 
-                    ); 
- 
-                const totalDia = numeroSeguro(totalInput.value); 
- 
-                if (totalInput.value === "") { 
-                    hayTotalesSinColocar = true; 
-                    todoCorrecto = false; 
-                } 
- 
-                const inputs = 
-                    document.querySelectorAll( 
-                        `.distribucion-input[data-grupo="${grupoId}"]` 
-                    ); 
- 
-                let suma = 0; 
- 
-                inputs.forEach(function(input) { 
-                    suma += numeroSeguro(input.value); 
-                }); 
- 
-                const indicador = 
-                    document.getElementById(`asignado-${grupoId}`); 
- 
-                indicador.textContent = 
-                    `${suma}/${totalDia}`; 
- 
-                indicador.classList.remove( 
-                    "correcto", 
-                    "incorrecto", 
-                    "pendiente" 
-                ); 
- 
-                if (totalInput.value === "") { 
- 
-                    indicador.classList.add("pendiente"); 
- 
-                } else if (Math.abs(suma - totalDia) < 0.001) { 
- 
-                    indicador.classList.add("correcto"); 
- 
-                } else { 
- 
-                    indicador.classList.add("incorrecto"); 
-                    todoCorrecto = false; 
- 
-                } 
- 
-            }); 
- 
- 
-            if (hayTotalesSinColocar) { 
- 
-                aviso.className = "aviso-distribucion"; 
-                aviso.textContent = 
-                    "⚠️ Coloca el total de equivalentes por día para cada grupo."; 
- 
-            } else if (todoCorrecto) { 
- 
-                aviso.className = 
-                    "aviso-distribucion exito-distribucion"; 
- 
-                aviso.textContent = 
-                    "✓ Todos los equivalentes están correctamente distribuidos."; 
- 
-            } else { 
- 
-                aviso.className = 
-                    "aviso-distribucion error-distribucion"; 
- 
-                aviso.textContent = 
-                    "⚠️ Revisa la distribución. El total asignado debe coincidir con el total del día."; 
- 
-            } 
- 
-            return todoCorrecto; 
- 
-        } 
- 
- 
-        /* --------------------------------------------------------- 
-           OBTENER DATOS DE DISTRIBUCIÓN 
-        --------------------------------------------------------- */ 
- 
-        function obtenerDistribucion() { 
- 
-            const grupos = obtenerGruposSeleccionados(); 
- 
-            const distribucion = {}; 
- 
-            grupos.forEach(function(grupoId) { 
- 
-                const totalInput = 
-                    document.querySelector( 
-                        `.total-dia[data-grupo="${grupoId}"]` 
-                    ); 
- 
-                distribucion[grupoId] = { 
- 
-                    nombre: nombresGrupos[grupoId], 
- 
-                    total: numeroSeguro(totalInput.value), 
- 
-                    desayuno: 0, 
-                    colacionAM: 0, 
-                    comida: 0, 
-                    colacionPM: 0, 
-                    cena: 0 
- 
-                }; 
- 
-                const inputs = 
-                    document.querySelectorAll( 
-                        `.distribucion-input[data-grupo="${grupoId}"]` 
-                    ); 
- 
-                inputs.forEach(function(input) { 
- 
-                    const tiempo = input.dataset.tiempo; 
- 
-                    distribucion[grupoId][tiempo] = 
-                        numeroSeguro(input.value); 
- 
-                }); 
- 
-            }); 
- 
-            return distribucion; 
- 
-        } 
- 
- 
-        /* --------------------------------------------------------- 
-           GENERAR ENLACE 
-        --------------------------------------------------------- */ 
- 
-        function generarEnlace() { 
- 
-            const grupos = obtenerGruposSeleccionados(); 
- 
-            if (grupos.length === 0) { 
- 
-                alert( 
-                    "Primero selecciona al menos un grupo de alimentos." 
-                ); 
- 
-                return; 
- 
-            } 
- 
-            if (!revisarDistribucion()) { 
- 
-                alert( 
-                    "Revisa la distribución de equivalentes antes de generar el enlace." 
-                ); 
- 
-                return; 
- 
-            } 
- 
-            const distribucion = obtenerDistribucion(); 
- 
-            const url = new URL( 
-                window.location.href 
-            ); 
- 
-            url.search = ""; 
- 
-            url.searchParams.set( 
-                "grupos", 
-                grupos.join(",") 
-            ); 
- 
-            url.searchParams.set( 
-                "dist", 
-                JSON.stringify(distribucion) 
-            ); 
- 
-            const enlace = url.toString(); 
- 
-            document.getElementById( 
-                "enlaceGenerado" 
-            ).value = enlace; 
- 
-            document.getElementById( 
-                "resultadoEnlace" 
-            ).style.display = "block"; 
- 
-        } 
- 
- 
-        /* --------------------------------------------------------- 
-           COPIAR ENLACE 
-        --------------------------------------------------------- */ 
- 
-        function copiarEnlace() { 
- 
-            const campo = 
-                document.getElementById("enlaceGenerado"); 
- 
-            const texto = campo.value; 
- 
-            if (!texto) { 
-                return; 
-            } 
- 
-            if ( 
-                navigator.clipboard && 
-                window.isSecureContext 
-            ) { 
- 
-                navigator.clipboard.writeText(texto) 
-                    .then(function() { 
- 
-                        mostrarMensajeCopia(); 
- 
-                    }) 
-                    .catch(function() { 
- 
-                        copiarMetodoAlternativo(campo); 
- 
-                    }); 
- 
-            } else { 
- 
-                copiarMetodoAlternativo(campo); 
- 
-            } 
- 
-        } 
- 
- 
-        function copiarMetodoAlternativo(campo) { 
- 
-            campo.select(); 
-            campo.setSelectionRange( 
-                0, 
-                99999 
-            ); 
- 
-            try { 
- 
-                document.execCommand("copy"); 
-                mostrarMensajeCopia(); 
- 
-            } catch (error) { 
- 
-                alert( 
-                    "No se pudo copiar automáticamente. Selecciona y copia el enlace manualmente." 
-                ); 
- 
-            } 
- 
-        } 
- 
- 
-        function mostrarMensajeCopia() { 
- 
-            const mensaje = 
-                document.getElementById("mensajeCopia"); 
- 
-            mensaje.style.display = "block"; 
- 
-            setTimeout(function() { 
- 
-                mensaje.style.display = "none"; 
- 
-            }, 2500); 
- 
-        } 
- 
- 
-        /* --------------------------------------------------------- 
-           MOSTRAR DISTRIBUCIÓN AL PACIENTE 
-        --------------------------------------------------------- */ 
- 
-        function mostrarDistribucionPaciente(distribucion) { 
- 
-            const tiempos = { 
- 
-                desayuno: "pacienteDesayuno", 
-                colacionAM: "pacienteColacionAM", 
-                comida: "pacienteComida", 
-                colacionPM: "pacienteColacionPM", 
-                cena: "pacienteCena" 
- 
-            }; 
- 
-            const nombresTiempos = { 
- 
-                desayuno: "Desayuno", 
-                colacionAM: "Colación AM", 
-                comida: "Comida", 
-                colacionPM: "Colación PM", 
-                cena: "Cena" 
- 
-            }; 
- 
- 
-            Object.keys(tiempos).forEach(function(tiempo) { 
- 
-                const contenedor = 
-                    document.getElementById( 
-                        tiempos[tiempo] 
-                    ); 
- 
-                const lista = 
-                    contenedor.querySelector( 
-                        ".lista-tiempo" 
-                    ); 
- 
-                lista.innerHTML = ""; 
- 
-                let hayEquivalentes = false; 
- 
- 
-                Object.keys(distribucion).forEach(function(grupoId) { 
- 
-                    const datos = 
-                        distribucion[grupoId]; 
- 
-                    const cantidad = 
-                        numeroSeguro( 
-                            datos[tiempo] 
-                        ); 
- 
-                    if (cantidad > 0) { 
- 
-                        hayEquivalentes = true; 
- 
-                        const elemento = 
-                            document.createElement("div"); 
- 
-                        elemento.className = 
-                            "equivalente-paciente"; 
- 
-                        elemento.innerHTML = ` 
- 
-                            <span> 
-                                ${datos.nombre} 
-                            </span> 
- 
-                            <span class="cantidad-equivalente"> 
-                                ${cantidad} equivalente${cantidad === 1 ? "" : "s"} 
-                            </span> 
- 
-                        `; 
- 
-                        lista.appendChild(elemento); 
- 
-                    } 
- 
-                }); 
- 
- 
-                if (!hayEquivalentes) { 
- 
-                    contenedor.style.display = "none"; 
- 
-                } else { 
- 
-                    contenedor.style.display = "block"; 
- 
-                } 
- 
-            }); 
- 
- 
-            document.getElementById( 
-                "distribucionPaciente" 
-            ).style.display = "block"; 
- 
-        } 
- 
- 
-        /* --------------------------------------------------------- 
-           CARGAR ENLACE PERSONALIZADO 
-        --------------------------------------------------------- */ 
- 
-        function cargarEnlacePersonalizado() { 
- 
-            const parametros = 
-                new URLSearchParams( 
-                    window.location.search 
-                ); 
- 
-            const gruposParametro = 
-                parametros.get("grupos"); 
- 
-            const distribucionParametro = 
-                parametros.get("dist"); 
- 
- 
-            if (!gruposParametro) { 
- 
-                return; 
- 
-            } 
- 
- 
-            /* OCULTAR VISTA PROFESIONAL */ 
- 
-            document.getElementById( 
-                "panelSeleccion" 
-            ).style.display = "none"; 
- 
-            document.getElementById( 
-                "panelDistribucion" 
-            ).style.display = "none"; 
- 
-            document.getElementById( 
-                "panelGenerar" 
-            ).style.display = "none"; 
- 
-            document.getElementById( 
-                "textoPrincipal" 
-            ).style.display = "none"; 
- 
- 
-            /* MOSTRAR MENSAJE DE PACIENTE */ 
- 
-            document.getElementById( 
-                "mensajePaciente" 
-            ).style.display = "block"; 
- 
- 
-            /* OCULTAR TODOS LOS GRUPOS */ 
- 
-            Object.values(relaciones).forEach(function(grupoId) { 
- 
-                const grupo = 
-                    document.getElementById(grupoId); 
- 
-                grupo.style.display = "none"; 
- 
-            }); 
- 
- 
-            /* MOSTRAR SOLO LOS GRUPOS SELECCIONADOS */ 
- 
-            const grupos = 
-                gruposParametro.split(","); 
- 
- 
-            grupos.forEach(function(grupoId) { 
- 
-                const grupo = 
-                    document.getElementById(grupoId); 
- 
-                if (grupo) { 
- 
-                    grupo.style.display = "block"; 
- 
-                } 
- 
-            }); 
- 
- 
-            /* CARGAR DISTRIBUCIÓN */ 
- 
-            if (distribucionParametro) { 
- 
-                try { 
- 
-                    const distribucion = 
-                        JSON.parse( 
-                            distribucionParametro 
-                        ); 
- 
-                    mostrarDistribucionPaciente( 
-                        distribucion 
-                    ); 
- 
-                } catch (error) { 
- 
-                    console.error( 
-                        "No se pudo leer la distribución.", 
-                        error 
-                    ); 
- 
-                } 
- 
-            } 
- 
-        } 
- 
- 
-        /* --------------------------------------------------------- 
-           INICIAR PÁGINA 
-        --------------------------------------------------------- */ 
- 
-        document.addEventListener( 
-            "DOMContentLoaded", 
-            function() { 
- 
-                /* Ocultar todos los grupos inicialmente */ 
- 
-                Object.values(relaciones).forEach(function(grupoId) { 
- 
-                    const grupo = 
-                        document.getElementById(grupoId); 
- 
-                    grupo.style.display = "none"; 
- 
-                }); 
- 
- 
-                /* Activar los checkboxes */ 
- 
-                Object.keys(relaciones).forEach(function(checkId) { 
- 
-                    const checkbox = 
-                        document.getElementById(checkId); 
- 
-                    checkbox.addEventListener( 
-                        "change", 
-                        actualizarGrupos 
-                    ); 
- 
-                }); 
- 
- 
-                /* Revisar si es un enlace personalizado */ 
- 
-                cargarEnlacePersonalizado(); 
- 
-            } 
-        ); 
- 
-    </script> 
- 
-</body> 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intercambio de Equivalentes</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f7f7f7;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #5b3a70;
+        }
+
+        h2 {
+            color: #5b3a70;
+            margin-top: 0;
+        }
+
+        .seleccion,
+        .distribucion,
+        .grupo {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .checkboxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+        }
+
+        .checkboxes label {
+            background: #f1eaf5;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .checkboxes label:hover {
+            background: #e5d8ec;
+        }
+
+        .boton {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto 10px;
+            padding: 13px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #5b3a70;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background: #472d58;
+        }
+
+        .boton-secundario {
+            background: #80659a;
+        }
+
+        .resultado-enlace {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1eaf5;
+            border-radius: 10px;
+        }
+
+        .resultado-enlace p {
+            margin-top: 0;
+            font-weight: bold;
+        }
+
+        #enlaceGenerado {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .grupo {
+            display: none;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 400px;
+        }
+
+        th {
+            background: #5b3a70;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        td {
+            padding: 9px 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .nota {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .vista-paciente {
+            text-align: center;
+            color: #5b3a70;
+            margin-bottom: 25px;
+        }
+
+        .mensaje-copia {
+            display: none;
+            text-align: center;
+            color: #4b7a4b;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* DISTRIBUCIÓN */
+
+        #panelDistribucion {
+            display: none;
+        }
+
+        .tabla-distribucion {
+            min-width: 850px;
+        }
+
+        .tabla-distribucion input {
+            width: 65px;
+            padding: 7px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .tabla-distribucion input:focus {
+            outline: none;
+            border-color: #5b3a70;
+        }
+
+        .total-asignado {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .correcto {
+            color: #39804a;
+        }
+
+        .incorrecto {
+            color: #c0392b;
+        }
+
+        .pendiente {
+            color: #777;
+        }
+
+        .aviso-distribucion {
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            background: #f8f2fb;
+            color: #5b3a70;
+        }
+
+        .error-distribucion {
+            background: #fdeeee;
+            color: #a93226;
+        }
+
+        .exito-distribucion {
+            background: #edf8ef;
+            color: #31743e;
+        }
+
+        /* VISTA DE PACIENTE */
+
+        #distribucionPaciente {
+            display: none;
+        }
+
+        .tiempo-comida {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .tiempo-comida h3 {
+            color: #5b3a70;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .equivalente-paciente {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f7f2fa;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 7px;
+        }
+
+        .cantidad-equivalente {
+            font-weight: bold;
+            color: #5b3a70;
+            white-space: nowrap;
+        }
+
+        .explicacion-paciente {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .boton-tabla {
+            background: #80659a;
+            margin: 10px 0 20px;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .seleccion,
+            .distribucion,
+            .grupo {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .equivalente-paciente {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+        }
+    </style>
+
+    <!-- ========================================================= -->
+    <!-- CONEXIÓN CON SUPABASE -->
+    <!-- ========================================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        const SUPABASE_URL =
+            "https://mqcsqutcvqcbpvtocpwy.supabase.co";
+
+        const SUPABASE_PUBLISHABLE_KEY =
+            "PEGA_AQUI_TU_PUBLISHABLE_KEY";
+
+        const supabaseClient = supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
+    </script>
+
+</head>
+
+<body>
+
+    <h1>Intercambio de Equivalentes</h1>
+
+    <p class="nota" id="textoPrincipal">
+        Selecciona los grupos de alimentos que deseas utilizar para tu paciente.
+    </p>
+
+
+    <!-- ========================================================= -->
+    <!-- PANEL PARA LA NUTRIÓLOGA -->
+    <!-- ========================================================= -->
+
+    <div class="seleccion" id="panelSeleccion">
+
+        <h2>Selecciona los grupos para tu paciente</h2>
+
+        <div class="checkboxes">
+
+            <label>
+                <input type="checkbox" id="checkVerduras">
+                Verduras
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkFrutas">
+                Frutas
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkCerealesSinGrasa">
+                Cereales sin grasa
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkCerealesConGrasa">
+                Cereales con grasa
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkLeguminosas">
+                Leguminosas
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkAOAMuyBajo">
+                AOA - Muy bajo aporte de grasa
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkAOABajo">
+                AOA - Bajo aporte de grasa
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkAOAModerado">
+                AOA - Moderado aporte de grasa
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkAOAAlto">
+                AOA - Alto aporte de grasa
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkLecheSemidescremada">
+                Leche semidescremada
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkAceitesSinProteina">
+                Aceites y grasas - Sin proteína
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkAceitesConProteina">
+                Aceites y grasas - Con proteína
+            </label>
+
+            <label>
+                <input type="checkbox" id="checkAzucaresSinGrasa">
+                Azúcares - Sin grasa
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- PANEL DE DISTRIBUCIÓN -->
+    <!-- ========================================================= -->
+
+    <div class="distribucion" id="panelDistribucion">
+
+        <h2>Distribución de equivalentes</h2>
+
+        <p>
+            Indica cuántos equivalentes necesita tu paciente de cada grupo al día
+            y distribúyelos entre los diferentes tiempos de comida.
+        </p>
+
+        <div style="overflow-x:auto;">
+
+            <table class="tabla-distribucion">
+
+                <thead>
+                    <tr>
+                        <th>Grupo</th>
+                        <th>Total/día</th>
+                        <th>Desayuno</th>
+                        <th>Col. AM</th>
+                        <th>Comida</th>
+                        <th>Col. PM</th>
+                        <th>Cena</th>
+                        <th>Asignado</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaDistribucionBody"></tbody>
+
+            </table>
+
+        </div>
+
+        <div class="aviso-distribucion" id="avisoDistribucion">
+            Selecciona los grupos y coloca los equivalentes diarios.
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- BOTÓN PARA GENERAR ENLACE -->
+    <!-- ========================================================= -->
+
+    <div class="seleccion" id="panelGenerar">
+
+        <button class="boton" onclick="generarEnlace()">
+            🔗 Generar enlace para paciente
+        </button>
+
+        <div class="resultado-enlace" id="resultadoEnlace">
+
+            <p>Este es el enlace personalizado:</p>
+
+            <input
+                type="text"
+                id="enlaceGenerado"
+                readonly
+            >
+
+            <button class="boton" onclick="copiarEnlace()">
+                📋 Copiar enlace
+            </button>
+
+            <div class="mensaje-copia" id="mensajeCopia">
+                ✓ Enlace copiado
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- VISTA DEL PACIENTE -->
+    <!-- ========================================================= -->
+
+    <div
+        class="vista-paciente"
+        id="mensajePaciente"
+        style="display:none;"
+    >
+
+        <h2>🌸 Mi distribución de equivalentes</h2>
+
+        <div class="explicacion-paciente">
+
+            <p>
+                Los equivalentes que aparecen aquí corresponden a la distribución
+                indicada por tu nutrióloga.
+            </p>
+
+            <p>
+                No necesitas consumir todos los alimentos de una lista.
+                Puedes elegir las opciones que prefieras para completar
+                los equivalentes indicados.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- DISTRIBUCIÓN PARA PACIENTE -->
+
+    <div id="distribucionPaciente">
+
+        <div class="tiempo-comida" id="pacienteDesayuno">
+            <h3>🌅 Desayuno</h3>
+            <div class="lista-tiempo"></div>
+        </div>
+
+        <div class="tiempo-comida" id="pacienteColacionAM">
+            <h3>☕ Colación AM</h3>
+            <div class="lista-tiempo"></div>
+        </div>
+
+        <div class="tiempo-comida" id="pacienteComida">
+            <h3>🍽️ Comida</h3>
+            <div class="lista-tiempo"></div>
+        </div>
+
+        <div class="tiempo-comida" id="pacienteColacionPM">
+            <h3>☕ Colación PM</h3>
+            <div class="lista-tiempo"></div>
+        </div>
+
+        <div class="tiempo-comida" id="pacienteCena">
+            <h3>🌙 Cena</h3>
+            <div class="lista-tiempo"></div>
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- VERDURAS -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoVerduras">
+
+        <h2>Verduras</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Acelga</td><td>1/2 taza</td></tr>
+            <tr><td>Brócoli</td><td>1/2 taza</td></tr>
+            <tr><td>Calabacita alargada</td><td>1 pieza</td></tr>
+            <tr><td>Champiñón</td><td>1/2 taza</td></tr>
+            <tr><td>Chayote</td><td>1 taza</td></tr>
+            <tr><td>Chícharo</td><td>1/4 taza</td></tr>
+            <tr><td>Espinaca cruda</td><td>2 tazas</td></tr>
+            <tr><td>Jitomate</td><td>1 pieza</td></tr>
+            <tr><td>Zanahoria cruda</td><td>1/2 taza</td></tr>
+            <tr><td>Cebolla</td><td>1/2 taza</td></tr>
+            <tr><td>Pimiento fresco</td><td>1 taza</td></tr>
+            <tr><td>Lechuga</td><td>2 tazas</td></tr>
+            <tr><td>Apio</td><td>1 taza</td></tr>
+            <tr><td>Betabel</td><td>1/4 pieza</td></tr>
+            <tr><td>Coliflor</td><td>1 taza</td></tr>
+            <tr><td>Ejotes</td><td>1/2 taza</td></tr>
+            <tr><td>Jícama</td><td>1/2 taza</td></tr>
+            <tr><td>Nopal</td><td>1 taza</td></tr>
+            <tr><td>Pepino</td><td>1 taza</td></tr>
+            <tr><td>Rábano</td><td>1 taza</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- FRUTAS -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoFrutas">
+
+        <h2>Frutas</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Blueberries</td><td>3/4 taza</td></tr>
+            <tr><td>Frambuesa</td><td>1 taza</td></tr>
+            <tr><td>Zarzamora</td><td>1 taza</td></tr>
+            <tr><td>Fresa entera</td><td>17 piezas medianas</td></tr>
+            <tr><td>Uva</td><td>18 piezas</td></tr>
+            <tr><td>Plátano</td><td>1/2 pieza</td></tr>
+            <tr><td>Fresa congelada</td><td>1/2 taza</td></tr>
+            <tr><td>Mango manila</td><td>1 pieza</td></tr>
+            <tr><td>Mango petacón</td><td>1/2 pieza</td></tr>
+            <tr><td>Manzana</td><td>1 pieza</td></tr>
+            <tr><td>Melón</td><td>1 taza</td></tr>
+            <tr><td>Pera</td><td>1/2 pieza</td></tr>
+            <tr><td>Sandía</td><td>1 taza</td></tr>
+            <tr><td>Duraznos</td><td>2 piezas</td></tr>
+            <tr><td>Mandarina</td><td>1 taza</td></tr>
+            <tr><td>Piña</td><td>3/4 taza</td></tr>
+            <tr><td>Zapote</td><td>1/4 taza</td></tr>
+            <tr><td>Papaya</td><td>1 taza</td></tr>
+            <tr><td>Guanábana</td><td>1 pieza chica</td></tr>
+            <tr><td>Naranja</td><td>4 piezas</td></tr>
+            <tr><td>Tuna</td><td>2 piezas</td></tr>
+            <tr><td>Toronja</td><td>1 pieza</td></tr>
+            <tr><td>Maracuyá</td><td>3 piezas</td></tr>
+            <tr><td>Lima</td><td>3 piezas</td></tr>
+            <tr><td>Kiwi</td><td>1 1/2 pieza</td></tr>
+            <tr><td>Guayaba</td><td>3 piezas</td></tr>
+            <tr><td>Cereza</td><td>20 piezas</td></tr>
+            <tr><td>Agua de coco</td><td>1 1/2 taza</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- CEREALES SIN GRASA -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoCerealesSinGrasa">
+
+        <h2>Cereales sin grasa</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Arroz integral</td><td>1/3 taza</td></tr>
+            <tr><td>Arroz cocido</td><td>1/4 taza</td></tr>
+            <tr><td>Avena integral</td><td>1/3 taza</td></tr>
+            <tr><td>Bolillo</td><td>1/3 pieza</td></tr>
+            <tr><td>Avena Quaker 3 min</td><td>1/2 taza</td></tr>
+            <tr><td>Camote cocido</td><td>1/3 taza</td></tr>
+            <tr><td>Elote desgranado</td><td>1/2 taza</td></tr>
+            <tr><td>Pinole</td><td>15 g</td></tr>
+            <tr><td>Palomitas naturales</td><td>2 1/2 taza</td></tr>
+            <tr><td>Macarrón cocido</td><td>1/3 taza</td></tr>
+            <tr><td>Galleta María</td><td>5 piezas</td></tr>
+            <tr><td>Galletas Salmas</td><td>3 piezas</td></tr>
+            <tr><td>Pan blanco o tostado</td><td>1 rebanada</td></tr>
+            <tr><td>Papa</td><td>1/2 pieza</td></tr>
+            <tr><td>Pasta cocida</td><td>1/2 taza</td></tr>
+            <tr><td>Saladitas</td><td>5 piezas</td></tr>
+            <tr><td>Tortilla</td><td>1 pieza</td></tr>
+            <tr><td>Yuca</td><td>1/4 pieza</td></tr>
+            <tr><td>Pan pita</td><td>1/3 pieza</td></tr>
+            <tr><td>Pan de caja</td><td>1 rebanada</td></tr>
+            <tr><td>Maicena</td><td>2 cdas</td></tr>
+            <tr><td>Hojuelas de maíz</td><td>3/4 taza</td></tr>
+            <tr><td>Croutones</td><td>1/2 taza</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- CEREALES CON GRASA -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoCerealesConGrasa">
+
+        <h2>Cereales con grasa</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Barrita de granola</td><td>2 cdas</td></tr>
+            <tr><td>Croissant</td><td>1/2 pieza</td></tr>
+            <tr><td>Croutones</td><td>3/4 taza</td></tr>
+            <tr><td>Galleta de avena</td><td>2 piezas</td></tr>
+            <tr><td>Pan de ajo</td><td>1 pieza</td></tr>
+            <tr><td>Pay de queso</td><td>1 rebanada</td></tr>
+            <tr><td>Puré de papa</td><td>1/2 taza</td></tr>
+            <tr><td>Tostada</td><td>1 1/2 pieza</td></tr>
+            <tr><td>Waffle</td><td>1 pieza</td></tr>
+            <tr><td>Wrap</td><td>1/2 pieza</td></tr>
+            <tr><td>Churros</td><td>1/2 pieza</td></tr>
+            <tr><td>Bisquet</td><td>1/2 pieza</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- LEGUMINOSAS -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoLeguminosas">
+
+        <h2>Leguminosas</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Alubia cocida</td><td>1/2 taza</td></tr>
+            <tr><td>Frijol molido</td><td>1/3 taza</td></tr>
+            <tr><td>Garbanzo</td><td>1/2 taza</td></tr>
+            <tr><td>Lenteja cocida</td><td>1/2 taza</td></tr>
+            <tr><td>Hummus</td><td>5 cucharadas</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- AOA MUY BAJO -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoAOAMuyBajo">
+
+        <h2>AOA - Muy bajo aporte de grasa</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Pechuga de pollo sin piel</td><td>30 g</td></tr>
+            <tr><td>Filete de pescado</td><td>40 g</td></tr>
+            <tr><td>Atún en agua</td><td>1/3 lata</td></tr>
+            <tr><td>Camarón cocido</td><td>5 piezas</td></tr>
+            <tr><td>Bistec</td><td>30 g</td></tr>
+            <tr><td>Filete de res</td><td>30 g</td></tr>
+            <tr><td>Cecina</td><td>25 g</td></tr>
+            <tr><td>Clara de huevo</td><td>2 piezas</td></tr>
+            <tr><td>Atún fresco</td><td>30 g</td></tr>
+            <tr><td>Camarón gigante</td><td>2 piezas</td></tr>
+            <tr><td>Chambarete de res</td><td>35 g</td></tr>
+            <tr><td>Chuleta ahumada</td><td>1/2 Pz</td></tr>
+            <tr><td>Cuete de res</td><td>45 g</td></tr>
+            <tr><td>Filete de atún</td><td>30 g</td></tr>
+            <tr><td>Milanesa de pollo</td><td>30 g</td></tr>
+            <tr><td>Pescado fileteado</td><td>40 g</td></tr>
+            <tr><td>Aguayón</td><td>30 g</td></tr>
+            <tr><td>Carne molida de pollo</td><td>30 g</td></tr>
+            <tr><td>Clara de huevo en polvo</td><td>1 1/2 cucharada</td></tr>
+            <tr><td>Falda de res</td><td>35 g</td></tr>
+            <tr><td>Maciza de res</td><td>25 g</td></tr>
+            <tr><td>Queso cottage</td><td>50 g</td></tr>
+            <tr><td>Queso mozzarella</td><td>1 rebanada</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- AOA BAJO -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoAOABajo">
+
+        <h2>AOA - Bajo aporte de grasa</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Arrachera de res</td><td>30 g</td></tr>
+            <tr><td>Atún ahumado</td><td>30 g</td></tr>
+            <tr><td>Atún blanco en aceite</td><td>30 g</td></tr>
+            <tr><td>Atún en aceite drenado</td><td>1/3 lata</td></tr>
+            <tr><td>Barbacoa</td><td>50 g</td></tr>
+            <tr><td>Bistec</td><td>35 g</td></tr>
+            <tr><td>Carne de cerdo</td><td>40 g</td></tr>
+            <tr><td>Carne de cerdo molida</td><td>40 g</td></tr>
+            <tr><td>Carne de res</td><td>30 g</td></tr>
+            <tr><td>Carne de ternera</td><td>35 g</td></tr>
+            <tr><td>Carne molida de cerdo</td><td>40 g</td></tr>
+            <tr><td>Chamorro</td><td>25 g</td></tr>
+            <tr><td>Chuleta de cerdo</td><td>1/2 Pz</td></tr>
+            <tr><td>Cuete de ternera</td><td>35 g</td></tr>
+            <tr><td>Falda de cerdo</td><td>40 g</td></tr>
+            <tr><td>Filete de cerdo</td><td>40 g</td></tr>
+            <tr><td>Gallina</td><td>40 g</td></tr>
+            <tr><td>Jamón de pavo</td><td>2 Rb</td></tr>
+            <tr><td>Lomo de cerdo</td><td>40 g</td></tr>
+            <tr><td>Milanesa de cerdo</td><td>40 g</td></tr>
+            <tr><td>Molida de cerdo</td><td>40 g</td></tr>
+            <tr><td>Molida de res</td><td>30 g</td></tr>
+            <tr><td>Pechuga de pollo</td><td>35 g</td></tr>
+            <tr><td>Pescado blanco</td><td>75 g</td></tr>
+            <tr><td>Pescado fileteado</td><td>35 g</td></tr>
+            <tr><td>Pierna de cerdo</td><td>40 g</td></tr>
+            <tr><td>Queso cottage</td><td>3 cda</td></tr>
+            <tr><td>Queso fresco</td><td>40 g</td></tr>
+            <tr><td>Queso panela</td><td>40 g</td></tr>
+            <tr><td>Queso ricotta bajo en grasa</td><td>3 cda</td></tr>
+            <tr><td>Sirloin</td><td>25 g</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- AOA MODERADO -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoAOAModerado">
+
+        <h2>AOA - Moderado aporte de grasa</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Huevo</td><td>1 pieza</td></tr>
+            <tr><td>Bistec de bola</td><td>25 g</td></tr>
+            <tr><td>Carne molida extra-magra</td><td>30 g</td></tr>
+            <tr><td>Pecho de res</td><td>50 g</td></tr>
+            <tr><td>Costillitas de cerdo</td><td>50 g</td></tr>
+            <tr><td>Longaniza</td><td>45 g</td></tr>
+            <tr><td>Pierna de pollo con piel cocida</td><td>1/3 pieza</td></tr>
+            <tr><td>Muslo de pollo con piel cocida</td><td>1/3 pieza</td></tr>
+            <tr><td>Salmón</td><td>30 g</td></tr>
+            <tr><td>Sardina en tomate</td><td>1 pieza</td></tr>
+            <tr><td>Sierra</td><td>50 g</td></tr>
+            <tr><td>Queso blanco</td><td>35 g</td></tr>
+            <tr><td>Queso mozzarella semidescremada</td><td>30 g</td></tr>
+            <tr><td>Queso Ricotta semidescremada</td><td>55 g</td></tr>
+            <tr><td>Requesón</td><td>3 1/2 cdas</td></tr>
+            <tr><td>Salchicha de pavo</td><td>1 pieza</td></tr>
+            <tr><td>Queso parmesano rallado</td><td>3 1/2 cdas</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- AOA ALTO -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoAOAAlto">
+
+        <h2>AOA - Alto aporte de grasa</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Alitas de pollo</td><td>2 piezas</td></tr>
+            <tr><td>Carne de res</td><td>40 g</td></tr>
+            <tr><td>Carne molida</td><td>40 g</td></tr>
+            <tr><td>Cecina de res</td><td>50 g</td></tr>
+            <tr><td>Costilla de res</td><td>40 g</td></tr>
+            <tr><td>Nugget de pollo</td><td>2 piezas</td></tr>
+            <tr><td>Peperoni</td><td>10 rebanadas</td></tr>
+            <tr><td>Queso amarillo</td><td>2 rebanadas</td></tr>
+            <tr><td>Queso cheddar</td><td>3/4 rebanada</td></tr>
+            <tr><td>Queso chihuahua</td><td>1 rebanada</td></tr>
+            <tr><td>Queso manchego</td><td>25 g</td></tr>
+            <tr><td>Salchicha</td><td>1/2 pieza</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- LECHE SEMIDESCREMADA -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoLecheSemidescremada">
+
+        <h2>Leche semidescremada</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Leche semidescremada</td><td>1 taza</td></tr>
+            <tr><td>Yogurth Oikos estilo griego natural sin azúcar</td><td>Envase de 150 gramos</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- ACEITES Y GRASAS SIN PROTEÍNA -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoAceitesSinProteina">
+
+        <h2>Aceites y grasas - Sin proteína</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Aguacate Hass</td><td>1/3 pieza</td></tr>
+            <tr><td>Aceituna</td><td>5 piezas</td></tr>
+            <tr><td>Aderezo</td><td>1/2 cucharada</td></tr>
+            <tr><td>Coco rallado</td><td>1 1/2 cucharada</td></tr>
+            <tr><td>Crema ácida</td><td>2 cucharadas</td></tr>
+            <tr><td>Guacamole</td><td>2 cucharadas</td></tr>
+            <tr><td>Mantequilla</td><td>1 1/2 cucharadita</td></tr>
+            <tr><td>Mayonesa</td><td>1 cucharadita</td></tr>
+            <tr><td>Media crema</td><td>2 cucharaditas</td></tr>
+            <tr><td>Tocino</td><td>1 rebanada</td></tr>
+            <tr><td>Vinagreta</td><td>1/2 cucharada</td></tr>
+            <tr><td>Queso Philadelphia</td><td>1 cucharada</td></tr>
+            <tr><td>Queso crema</td><td>1 cucharada</td></tr>
+            <tr><td>Aceituna negra sin hueso</td><td>5 piezas</td></tr>
+            <tr><td>Aceite de oliva</td><td>1 cucharadita</td></tr>
+            <tr><td>Aceite de palma</td><td>1 cucharadita</td></tr>
+            <tr><td>Aceite de girasol</td><td>1 cucharadita</td></tr>
+            <tr><td>Aceite de cacahuate</td><td>1 cucharadita</td></tr>
+            <tr><td>Aderezo Ranch</td><td>1/2 cucharadita</td></tr>
+            <tr><td>Aderezo César</td><td>1/2 cucharadita</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- ACEITES Y GRASAS CON PROTEÍNA -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoAceitesConProteina">
+
+        <h2>Aceites y grasas - Con proteína</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Ajonjolí</td><td>4 cucharaditas</td></tr>
+            <tr><td>Almendra</td><td>10 piezas</td></tr>
+            <tr><td>Avellana</td><td>9 piezas</td></tr>
+            <tr><td>Cacahuate</td><td>14 piezas</td></tr>
+            <tr><td>Chía</td><td>7 cucharadas</td></tr>
+            <tr><td>Chorizo</td><td>15 g</td></tr>
+            <tr><td>Nuez entera</td><td>3 piezas</td></tr>
+            <tr><td>Pepitas</td><td>60 piezas</td></tr>
+            <tr><td>Crema de almendras</td><td>1 cucharada</td></tr>
+            <tr><td>Pistache</td><td>18 piezas</td></tr>
+            <tr><td>Semilla de girasol</td><td>4 cucharaditas</td></tr>
+            <tr><td>Piñón</td><td>1 cucharada</td></tr>
+            <tr><td>Castaña</td><td>1 1/2 pieza</td></tr>
+            <tr><td>Vinagreta</td><td>1 1/2 cucharadita</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- AZÚCARES -->
+    <!-- ========================================================= -->
+
+    <div class="grupo" id="grupoAzucaresSinGrasa">
+
+        <h2>Azúcares - Sin grasa</h2>
+
+        <table>
+            <tr>
+                <th>Alimento</th>
+                <th>Porción</th>
+            </tr>
+
+            <tr><td>Azúcar de mesa</td><td>2 cucharaditas</td></tr>
+            <tr><td>Miel</td><td>2 cucharaditas</td></tr>
+            <tr><td>Panditas</td><td>1/3 bolsa</td></tr>
+            <tr><td>Paleta helada de agua</td><td>1 pieza</td></tr>
+            <tr><td>Salsa catsup</td><td>2 cucharadas</td></tr>
+            <tr><td>Mermelada</td><td>2 1/2 cucharaditas</td></tr>
+            <tr><td>Malvavisco</td><td>2 piezas</td></tr>
+            <tr><td>Gomitas</td><td>4 piezas</td></tr>
+            <tr><td>Gelatina</td><td>1/3 taza</td></tr>
+        </table>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================================================= -->
+
+    <script>
+
+        /* ---------------------------------------------------------
+           RELACIÓN ENTRE CHECKBOX Y GRUPO
+        --------------------------------------------------------- */
+
+        const relaciones = {
+
+            checkVerduras: "grupoVerduras",
+            checkFrutas: "grupoFrutas",
+            checkCerealesSinGrasa: "grupoCerealesSinGrasa",
+            checkCerealesConGrasa: "grupoCerealesConGrasa",
+            checkLeguminosas: "grupoLeguminosas",
+            checkAOAMuyBajo: "grupoAOAMuyBajo",
+            checkAOABajo: "grupoAOABajo",
+            checkAOAModerado: "grupoAOAModerado",
+            checkAOAAlto: "grupoAOAAlto",
+            checkLecheSemidescremada: "grupoLecheSemidescremada",
+            checkAceitesSinProteina: "grupoAceitesSinProteina",
+            checkAceitesConProteina: "grupoAceitesConProteina",
+            checkAzucaresSinGrasa: "grupoAzucaresSinGrasa"
+
+        };
+
+
+        /* ---------------------------------------------------------
+           NOMBRES DE LOS GRUPOS
+        --------------------------------------------------------- */
+
+        const nombresGrupos = {
+
+            grupoVerduras: "Verduras",
+            grupoFrutas: "Frutas",
+            grupoCerealesSinGrasa: "Cereales sin grasa",
+            grupoCerealesConGrasa: "Cereales con grasa",
+            grupoLeguminosas: "Leguminosas",
+            grupoAOAMuyBajo: "AOA - Muy bajo aporte de grasa",
+            grupoAOABajo: "AOA - Bajo aporte de grasa",
+            grupoAOAModerado: "AOA - Moderado aporte de grasa",
+            grupoAOAAlto: "AOA - Alto aporte de grasa",
+            grupoLecheSemidescremada: "Leche semidescremada",
+            grupoAceitesSinProteina: "Aceites y grasas - Sin proteína",
+            grupoAceitesConProteina: "Aceites y grasas - Con proteína",
+            grupoAzucaresSinGrasa: "Azúcares - Sin grasa"
+
+        };
+
+
+        /* ---------------------------------------------------------
+           ACTUALIZAR GRUPOS VISIBLES
+        --------------------------------------------------------- */
+
+        function actualizarGrupos() {
+
+            Object.keys(relaciones).forEach(function(checkId) {
+
+                const checkbox = document.getElementById(checkId);
+                const grupoId = relaciones[checkId];
+                const grupo = document.getElementById(grupoId);
+
+                if (checkbox.checked) {
+                    grupo.style.display = "block";
+                } else {
+                    grupo.style.display = "none";
+                }
+
+            });
+
+            actualizarTablaDistribucion();
+        }
+
+
+        /* ---------------------------------------------------------
+           OBTENER GRUPOS SELECCIONADOS
+        --------------------------------------------------------- */
+
+        function obtenerGruposSeleccionados() {
+
+            const seleccionados = [];
+
+            Object.keys(relaciones).forEach(function(checkId) {
+
+                const checkbox = document.getElementById(checkId);
+
+                if (checkbox.checked) {
+                    seleccionados.push(relaciones[checkId]);
+                }
+
+            });
+
+            return seleccionados;
+        }
+
+
+        /* ---------------------------------------------------------
+           CREAR TABLA DE DISTRIBUCIÓN
+        --------------------------------------------------------- */
+
+        function actualizarTablaDistribucion() {
+
+            const grupos = obtenerGruposSeleccionados();
+
+            const panel = document.getElementById("panelDistribucion");
+            const tbody = document.getElementById("tablaDistribucionBody");
+
+            tbody.innerHTML = "";
+
+            if (grupos.length === 0) {
+
+                panel.style.display = "none";
+                revisarDistribucion();
+                return;
+
+            }
+
+            panel.style.display = "block";
+
+            grupos.forEach(function(grupoId) {
+
+                const fila = document.createElement("tr");
+
+                fila.innerHTML = `
+
+                    <td>
+                        <strong>${nombresGrupos[grupoId]}</strong>
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value=""
+                            placeholder="0"
+                            class="total-dia"
+                            data-grupo="${grupoId}"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="0"
+                            class="distribucion-input"
+                            data-grupo="${grupoId}"
+                            data-tiempo="desayuno"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="0"
+                            class="distribucion-input"
+                            data-grupo="${grupoId}"
+                            data-tiempo="colacionAM"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="0"
+                            class="distribucion-input"
+                            data-grupo="${grupoId}"
+                            data-tiempo="comida"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="0"
+                            class="distribucion-input"
+                            data-grupo="${grupoId}"
+                            data-tiempo="colacionPM"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="0"
+                            class="distribucion-input"
+                            data-grupo="${grupoId}"
+                            data-tiempo="cena"
+                            onchange="revisarDistribucion()"
+                        >
+                    </td>
+
+                    <td
+                        class="total-asignado pendiente"
+                        id="asignado-${grupoId}"
+                    >
+                        0/0
+                    </td>
+
+                `;
+
+                tbody.appendChild(fila);
+
+            });
+
+            revisarDistribucion();
+
+        }
+
+
+        /* ---------------------------------------------------------
+           LEER NÚMERO
+        --------------------------------------------------------- */
+
+        function numeroSeguro(valor) {
+
+            const numero = parseFloat(valor);
+
+            if (isNaN(numero) || numero < 0) {
+                return 0;
+            }
+
+            return numero;
+
+        }
+
+
+        /* ---------------------------------------------------------
+           REVISAR DISTRIBUCIÓN
+        --------------------------------------------------------- */
+
+        function revisarDistribucion() {
+
+            const grupos = obtenerGruposSeleccionados();
+
+            const aviso = document.getElementById("avisoDistribucion");
+
+            if (grupos.length === 0) {
+
+                aviso.className = "aviso-distribucion";
+                aviso.textContent =
+                    "Selecciona los grupos y coloca los equivalentes diarios.";
+
+                return false;
+
+            }
+
+            let todoCorrecto = true;
+            let hayTotalesSinColocar = false;
+
+            grupos.forEach(function(grupoId) {
+
+                const totalInput =
+                    document.querySelector(
+                        `.total-dia[data-grupo="${grupoId}"]`
+                    );
+
+                const totalDia = numeroSeguro(totalInput.value);
+
+                if (totalInput.value === "") {
+                    hayTotalesSinColocar = true;
+                    todoCorrecto = false;
+                }
+
+                const inputs =
+                    document.querySelectorAll(
+                        `.distribucion-input[data-grupo="${grupoId}"]`
+                    );
+
+                let suma = 0;
+
+                inputs.forEach(function(input) {
+                    suma += numeroSeguro(input.value);
+                });
+
+                const indicador =
+                    document.getElementById(`asignado-${grupoId}`);
+
+                indicador.textContent =
+                    `${suma}/${totalDia}`;
+
+                indicador.classList.remove(
+                    "correcto",
+                    "incorrecto",
+                    "pendiente"
+                );
+
+                if (totalInput.value === "") {
+
+                    indicador.classList.add("pendiente");
+
+                } else if (Math.abs(suma - totalDia) < 0.001) {
+
+                    indicador.classList.add("correcto");
+
+                } else {
+
+                    indicador.classList.add("incorrecto");
+                    todoCorrecto = false;
+
+                }
+
+            });
+
+
+            if (hayTotalesSinColocar) {
+
+                aviso.className = "aviso-distribucion";
+                aviso.textContent =
+                    "⚠️ Coloca el total de equivalentes por día para cada grupo.";
+
+            } else if (todoCorrecto) {
+
+                aviso.className =
+                    "aviso-distribucion exito-distribucion";
+
+                aviso.textContent =
+                    "✓ Todos los equivalentes están correctamente distribuidos.";
+
+            } else {
+
+                aviso.className =
+                    "aviso-distribucion error-distribucion";
+
+                aviso.textContent =
+                    "⚠️ Revisa la distribución. El total asignado debe coincidir con el total del día.";
+
+            }
+
+            return todoCorrecto;
+
+        }
+
+
+        /* ---------------------------------------------------------
+           OBTENER DATOS DE DISTRIBUCIÓN
+        --------------------------------------------------------- */
+
+        function obtenerDistribucion() {
+
+            const grupos = obtenerGruposSeleccionados();
+
+            const distribucion = {};
+
+            grupos.forEach(function(grupoId) {
+
+                const totalInput =
+                    document.querySelector(
+                        `.total-dia[data-grupo="${grupoId}"]`
+                    );
+
+                distribucion[grupoId] = {
+
+                    nombre: nombresGrupos[grupoId],
+
+                    total: numeroSeguro(totalInput.value),
+
+                    desayuno: 0,
+                    colacionAM: 0,
+                    comida: 0,
+                    colacionPM: 0,
+                    cena: 0
+
+                };
+
+                const inputs =
+                    document.querySelectorAll(
+                        `.distribucion-input[data-grupo="${grupoId}"]`
+                    );
+
+                inputs.forEach(function(input) {
+
+                    const tiempo = input.dataset.tiempo;
+
+                    distribucion[grupoId][tiempo] =
+                        numeroSeguro(input.value);
+
+                });
+
+            });
+
+            return distribucion;
+
+        }
+
+
+        /* ---------------------------------------------------------
+           GENERAR ENLACE
+        --------------------------------------------------------- */
+
+        function generarEnlace() {
+
+            const grupos = obtenerGruposSeleccionados();
+
+            if (grupos.length === 0) {
+
+                alert(
+                    "Primero selecciona al menos un grupo de alimentos."
+                );
+
+                return;
+
+            }
+
+            if (!revisarDistribucion()) {
+
+                alert(
+                    "Revisa la distribución de equivalentes antes de generar el enlace."
+                );
+
+                return;
+
+            }
+
+            const distribucion = obtenerDistribucion();
+
+            const url = new URL(
+                window.location.href
+            );
+
+            url.search = "";
+
+            url.searchParams.set(
+                "grupos",
+                grupos.join(",")
+            );
+
+            url.searchParams.set(
+                "dist",
+                JSON.stringify(distribucion)
+            );
+
+            const enlace = url.toString();
+
+            document.getElementById(
+                "enlaceGenerado"
+            ).value = enlace;
+
+            document.getElementById(
+                "resultadoEnlace"
+            ).style.display = "block";
+
+        }
+
+
+        /* ---------------------------------------------------------
+           COPIAR ENLACE
+        --------------------------------------------------------- */
+
+        function copiarEnlace() {
+
+            const campo =
+                document.getElementById("enlaceGenerado");
+
+            const texto = campo.value;
+
+            if (!texto) {
+                return;
+            }
+
+            if (
+                navigator.clipboard &&
+                window.isSecureContext
+            ) {
+
+                navigator.clipboard.writeText(texto)
+                    .then(function() {
+
+                        mostrarMensajeCopia();
+
+                    })
+                    .catch(function() {
+
+                        copiarMetodoAlternativo(campo);
+
+                    });
+
+            } else {
+
+                copiarMetodoAlternativo(campo);
+
+            }
+
+        }
+
+
+        function copiarMetodoAlternativo(campo) {
+
+            campo.select();
+            campo.setSelectionRange(
+                0,
+                99999
+            );
+
+            try {
+
+                document.execCommand("copy");
+                mostrarMensajeCopia();
+
+            } catch (error) {
+
+                alert(
+                    "No se pudo copiar automáticamente. Selecciona y copia el enlace manualmente."
+                );
+
+            }
+
+        }
+
+
+        function mostrarMensajeCopia() {
+
+            const mensaje =
+                document.getElementById("mensajeCopia");
+
+            mensaje.style.display = "block";
+
+            setTimeout(function() {
+
+                mensaje.style.display = "none";
+
+            }, 2500);
+
+        }
+
+
+        /* ---------------------------------------------------------
+           MOSTRAR DISTRIBUCIÓN AL PACIENTE
+        --------------------------------------------------------- */
+
+        function mostrarDistribucionPaciente(distribucion) {
+
+            const tiempos = {
+
+                desayuno: "pacienteDesayuno",
+                colacionAM: "pacienteColacionAM",
+                comida: "pacienteComida",
+                colacionPM: "pacienteColacionPM",
+                cena: "pacienteCena"
+
+            };
+
+            const nombresTiempos = {
+
+                desayuno: "Desayuno",
+                colacionAM: "Colación AM",
+                comida: "Comida",
+                colacionPM: "Colación PM",
+                cena: "Cena"
+
+            };
+
+
+            Object.keys(tiempos).forEach(function(tiempo) {
+
+                const contenedor =
+                    document.getElementById(
+                        tiempos[tiempo]
+                    );
+
+                const lista =
+                    contenedor.querySelector(
+                        ".lista-tiempo"
+                    );
+
+                lista.innerHTML = "";
+
+                let hayEquivalentes = false;
+
+
+                Object.keys(distribucion).forEach(function(grupoId) {
+
+                    const datos =
+                        distribucion[grupoId];
+
+                    const cantidad =
+                        numeroSeguro(
+                            datos[tiempo]
+                        );
+
+                    if (cantidad > 0) {
+
+                        hayEquivalentes = true;
+
+                        const elemento =
+                            document.createElement("div");
+
+                        elemento.className =
+                            "equivalente-paciente";
+
+                        elemento.innerHTML = `
+
+                            <span>
+                                ${datos.nombre}
+                            </span>
+
+                            <span class="cantidad-equivalente">
+                                ${cantidad} equivalente${cantidad === 1 ? "" : "s"}
+                            </span>
+
+                        `;
+
+                        lista.appendChild(elemento);
+
+                    }
+
+                });
+
+
+                if (!hayEquivalentes) {
+
+                    contenedor.style.display = "none";
+
+                } else {
+
+                    contenedor.style.display = "block";
+
+                }
+
+            });
+
+
+            document.getElementById(
+                "distribucionPaciente"
+            ).style.display = "block";
+
+        }
+
+
+        /* ---------------------------------------------------------
+           CARGAR ENLACE PERSONALIZADO
+        --------------------------------------------------------- */
+
+        function cargarEnlacePersonalizado() {
+
+            const parametros =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+            const gruposParametro =
+                parametros.get("grupos");
+
+            const distribucionParametro =
+                parametros.get("dist");
+
+
+            if (!gruposParametro) {
+
+                return;
+
+            }
+
+
+            /* OCULTAR VISTA PROFESIONAL */
+
+            document.getElementById(
+                "panelSeleccion"
+            ).style.display = "none";
+
+            document.getElementById(
+                "panelDistribucion"
+            ).style.display = "none";
+
+            document.getElementById(
+                "panelGenerar"
+            ).style.display = "none";
+
+            document.getElementById(
+                "textoPrincipal"
+            ).style.display = "none";
+
+
+            /* MOSTRAR MENSAJE DE PACIENTE */
+
+            document.getElementById(
+                "mensajePaciente"
+            ).style.display = "block";
+
+
+            /* OCULTAR TODOS LOS GRUPOS */
+
+            Object.values(relaciones).forEach(function(grupoId) {
+
+                const grupo =
+                    document.getElementById(grupoId);
+
+                grupo.style.display = "none";
+
+            });
+
+
+            /* MOSTRAR SOLO LOS GRUPOS SELECCIONADOS */
+
+            const grupos =
+                gruposParametro.split(",");
+
+
+            grupos.forEach(function(grupoId) {
+
+                const grupo =
+                    document.getElementById(grupoId);
+
+                if (grupo) {
+
+                    grupo.style.display = "block";
+
+                }
+
+            });
+
+
+            /* CARGAR DISTRIBUCIÓN */
+
+            if (distribucionParametro) {
+
+                try {
+
+                    const distribucion =
+                        JSON.parse(
+                            distribucionParametro
+                        );
+
+                    mostrarDistribucionPaciente(
+                        distribucion
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "No se pudo leer la distribución.",
+                        error
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        /* ---------------------------------------------------------
+           INICIAR PÁGINA
+        --------------------------------------------------------- */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                /* Ocultar todos los grupos inicialmente */
+
+                Object.values(relaciones).forEach(function(grupoId) {
+
+                    const grupo =
+                        document.getElementById(grupoId);
+
+                    grupo.style.display = "none";
+
+                });
+
+
+                /* Activar los checkboxes */
+
+                Object.keys(relaciones).forEach(function(checkId) {
+
+                    const checkbox =
+                        document.getElementById(checkId);
+
+                    checkbox.addEventListener(
+                        "change",
+                        actualizarGrupos
+                    );
+
+                });
+
+
+                /* Revisar si es un enlace personalizado */
+
+                cargarEnlacePersonalizado();
+
+            }
+        );
+
+    </script>
+
+</body>
 </html>
